@@ -41,6 +41,10 @@
 extern "C" {
 #endif
 
+  void leds_init(void);
+  void leds_on(unsigned char ledv);
+  void leds_off(unsigned char ledv);
+  void leds_toggle(unsigned char ledv);
 
 #ifdef __cplusplus
 }

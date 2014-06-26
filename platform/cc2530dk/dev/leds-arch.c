@@ -1,21 +1,21 @@
 /*
- * blink.c
+ * leds-arch.c
  *
  * Created on: Jun 26, 2014
- *     Author: Ekawahyu Susilo
+ *     Author: Jianing Liu
  *
- * Copyright (c) 2014, Chongqing Aisenke Electronic Technology Co., Ltd.
+ * Copyright (c) 2014, STORM Lab, Vanderbilt University
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met: 
- * 
+ * modification, are permitted provided that the following conditions are met:
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
- *    this list of conditions and the following disclaimer. 
+ *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution. 
- * 
+ *    and/or other materials provided with the distribution.
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDER AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -27,25 +27,42 @@
  * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
- * 
+ *
  * The views and conclusions contained in the software and documentation are
  * those of the authors and should not be interpreted as representing official
  * policies, either expressed or implied, of the copyright holder.
- * 
+ *
  */
 
-#include "dev/led.h"
+#include "cc253x.h"
+#define LED1	P1_0
+#define LED2	P1_1
+#define LED3	P1_4
 
-void delay(void){
-volatile int i;
-	i = 0;
-	while (i < 30000) {
-		i++;
-	}
+void leds_arch_init(void) {
+  P1SEL = P1SEL & 0xFE;
+	P1DIR = P1DIR | 0x01;//P1SEL selects function P1DIR selects I/O
+
+	P1SEL = P1SEL & 0xFD;
+	P1DIR = P1DIR | 0x02;
+
+	P1SEL = P1SEL & 0xEF;
+	P1DIR = P1DIR | 0x10;
 }
-void user_main(void) {
-  while(1){
-  delay();
-  leds_on(0x05);
-  }
+  void
+leds_arch_on(unsigned char leds)
+{
+  LED1 = leds & 0x01;
+  LED2 = (leds & 0x02) >> 1;
+  LED3 = (leds & 0x04) >> 2;
 }
+/*---------------------------------------------------------------------------*/
+void
+leds_arch_off(unsigned char leds)
+{
+  LED1 = (leds & 0x01) ^ 0x01;
+  LED2 = ((leds & 0x02) >> 1) ^ 0x01;
+  LED3 = ((leds & 0x04) >> 2) ^ 0x01;
+}
+/*---------------------------------------------------------------------------*/
+

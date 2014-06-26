@@ -34,16 +34,18 @@
  *
  */
 
-#include "smac.h"
-#include "sys/clock.h"
-#include "dev/leds.h"
+//#include "smac.h"
+//#include "sys/clock.h"
+#include "dev/led.h"
+
+void user_main(void);
 
 int main (void)
 {
-  clock_init();
+  //clock_init();
   leds_init();
-  leds_off(LEDS_ALL);
-  io_arch_init();
+  //leds_off(LEDS_ALL);
+  //io_arch_init();
 
   user_main();
 }

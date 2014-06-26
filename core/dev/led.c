@@ -34,3 +34,32 @@
  * 
  */
 
+#include "dev/leds-arch.h"
+
+static unsigned char leds;
+
+void leds_init(void) {
+  leds = 0;
+  leds_arch_init();
+}
+  void
+leds_on(unsigned char ledv)
+{
+  leds = leds | ledv;
+  leds_arch_on(leds);
+  
+}
+/*---------------------------------------------------------------------------*/
+void
+leds_off(unsigned char ledv)
+{
+  leds = leds & ~ledv;
+   leds_arch_off(leds);
+}
+/*---------------------------------------------------------------------------*/
+void
+leds_toggle(unsigned char ledv)
+{
+  leds_arch_on(leds ^ ledv);
+  leds_arch_off(leds ^ ledv);
+}

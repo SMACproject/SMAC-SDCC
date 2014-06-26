@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<project>
+  <fileVersion>2</fileVersion>
+  <fileChecksum>1710462047</fileChecksum>
+  <configuration>
+    <name>Debug</name>
+    <outputs>
+      <file>$PROJ_DIR$\Debug\Obj\led.r51</file>
+      <file>$PROJ_DIR$\Debug\Exe\SMAC.d51</file>
+      <file>$PROJ_DIR$\Debug\Obj\SMAC.pbd</file>
+      <file>$PROJ_DIR$\..\..\core\dev\led.h</file>
+      <file>$PROJ_DIR$\..\..\core\sys\clock.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\led.pbi</file>
+      <file>$PROJ_DIR$\..\..\core\dev\led.c</file>
+      <file>$PROJ_DIR$\..\..\core\smac.h</file>
+      <file>$TOOLKIT_DIR$\config\devices\_generic\lnk51ew_8052.xcl</file>
+      <file>$TOOLKIT_DIR$\lib\clib\cl-pli-nsid-1e16x01.r51</file>
+      <file>$TOOLKIT_DIR$\inc\clib\stdbool.h</file>
+      <file>$PROJ_DIR$\..\..\platform\cc2530dk\dev\leds-arch.h</file>
+      <file>$PROJ_DIR$\..\..\cpu\cc253x\dev\clock.c</file>
+      <file>$PROJ_DIR$\Debug\Obj\clock.r51</file>
+      <file>$PROJ_DIR$\Debug\Obj\clock.pbi</file>
+      <file>$PROJ_DIR$\..\..\cpu\cc253x\cc253x.h</file>
+      <file>$PROJ_DIR$\..\..\cpu\cc253x\compiler.h</file>
+      <file>$PROJ_DIR$\..\..\platform\cc2530dk\config.h</file>
+      <file>$PROJ_DIR$\..\..\platform\cc2530dk\main.c</file>
+      <file>$PROJ_DIR$\Debug\Obj\main.r51</file>
+      <file>$PROJ_DIR$\Debug\Obj\main.pbi</file>
+      <file>$PROJ_DIR$\..\..\platform\drugdelivery\config.h</file>
+      <file>$PROJ_DIR$\..\..\platform\drugdelivery\main.c</file>
+      <file>$PROJ_DIR$\..\..\examples\blink\blink.c</file>
+      <file>$PROJ_DIR$\Debug\Obj\blink.r51</file>
+      <file>$PROJ_DIR$\Debug\Obj\blink.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\leds-arch.r51</file>
+      <file>$PROJ_DIR$\..\..\platform\cc2530dk\dev\leds-arch.c</file>
+      <file>$PROJ_DIR$\Debug\Obj\leds-arch.pbi</file>
+    </outputs>
+    <file>
+      <name>$PROJ_DIR$\Debug\Exe\SMAC.d51</name>
+      <inputs>
+        <tool>
+          <name>XLINK</name>
+          <file> 8 24 13 0 26 19 9</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Debug\Obj\SMAC.pbd</name>
+      <inputs>
+        <tool>
+          <name>BILINK</name>
+          <file> 25 14 5 28 20</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\core\dev\led.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 5</file>
+        </tool>
+        <tool>
+          <name>ICC8051</name>
+          <file> 0</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 11</file>
+        </tool>
+        <tool>
+          <name>ICC8051</name>
+          <file> 11</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>[ROOT_NODE]</name>
+      <outputs>
+        <tool>
+          <name>XLINK</name>
+          <file> 1</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\cpu\cc253x\dev\clock.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 14</file>
+        </tool>
+        <tool>
+          <name>ICC8051</name>
+          <file> 13</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\platform\cc2530dk\main.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 20</file>
+        </tool>
+        <tool>
+          <name>ICC8051</name>
+          <file> 19</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 3</file>
+        </tool>
+        <tool>
+          <name>ICC8051</name>
+          <file> 3</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\platform\drugdelivery\main.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 20</file>
+        </tool>
+        <tool>
+          <name>ICC8051</name>
+          <file> 19</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\examples\blink\blink.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 25</file>
+        </tool>
+        <tool>
+          <name>ICC8051</name>
+          <file> 24</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 3</file>
+        </tool>
+        <tool>
+          <name>ICC8051</name>
+          <file> 3</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\platform\cc2530dk\dev\leds-arch.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 28</file>
+        </tool>
+        <tool>
+          <name>ICC8051</name>
+          <file> 26</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 15 16 10</file>
+        </tool>
+        <tool>
+          <name>ICC8051</name>
+          <file> 15 16 10</file>
+        </tool>
+      </inputs>
+    </file>
+    <forcedrebuild>
+      <name>$PROJ_DIR$\..\..\platform\drugdelivery\main.c</name>
+      <tool>ICC8051</tool>
+    </forcedrebuild>
+  </configuration>
+  <configuration>
+    <name>Release</name>
+    <outputs/>
+    <forcedrebuild>
+      <name>[MULTI_TOOL]</name>
+      <tool>XLINK</tool>
+    </forcedrebuild>
+  </configuration>
+</project>
+
+
