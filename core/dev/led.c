@@ -54,7 +54,7 @@ void
 leds_off(unsigned char ledv)
 {
   leds = leds & ~ledv;
-   leds_arch_off(leds);
+   leds_arch_on(leds);
 }
 /*---------------------------------------------------------------------------*/
 void

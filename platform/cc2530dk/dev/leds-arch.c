@@ -35,12 +35,14 @@
  */
 
 #include "cc253x.h"
-#define LED1	P1_0
-#define LED2	P1_1
-#define LED3	P1_4
+#include "dev/led.h"
+
+#define LED1_PIN	P1_0
+#define LED2_PIN	P1_1
+#define LED3_PIN	P1_4
 
 void leds_arch_init(void) {
-  P1SEL = P1SEL & 0xFE;
+	P1SEL = P1SEL & 0xFE;
 	P1DIR = P1DIR | 0x01;//P1SEL selects function P1DIR selects I/O
 
 	P1SEL = P1SEL & 0xFD;
@@ -52,17 +54,9 @@ void leds_arch_init(void) {
   void
 leds_arch_on(unsigned char leds)
 {
-  LED1 = leds & 0x01;
-  LED2 = (leds & 0x02) >> 1;
-  LED3 = (leds & 0x04) >> 2;
-}
-/*---------------------------------------------------------------------------*/
-void
-leds_arch_off(unsigned char leds)
-{
-  LED1 = (leds & 0x01) ^ 0x01;
-  LED2 = ((leds & 0x02) >> 1) ^ 0x01;
-  LED3 = ((leds & 0x04) >> 2) ^ 0x01;
+  LED1_PIN = leds & 0x01;
+  LED2_PIN = (leds & 0x02) >> 1;
+  LED3_PIN = (leds & 0x04) >> 2;
 }
 /*---------------------------------------------------------------------------*/
 

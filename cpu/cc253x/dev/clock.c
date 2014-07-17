@@ -34,3 +34,11 @@
  * 
  */
 
+#include "cc253x.h"
+#include "compiler.h"
+
+void clock_init(void) {
+  CLKCONCMD = 0xC0;
+  CLKCONCMD &= ~0x40;
+  while(CLKCONSTA & 0x40);
+}

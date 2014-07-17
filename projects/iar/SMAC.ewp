@@ -152,7 +152,7 @@
         </option>
         <option>
           <name>RTDescription</name>
-          <state></state>
+          <state>Use the legacy C runtime library.</state>
         </option>
         <option>
           <name>RTConfigPath</name>
@@ -169,7 +169,7 @@
         </option>
         <option>
           <name>Input description</name>
-          <state></state>
+          <state>Full formatting.</state>
         </option>
         <option>
           <name>Output variant</name>
@@ -178,7 +178,7 @@
         </option>
         <option>
           <name>Output description</name>
-          <state></state>
+          <state>Full formatting.</state>
         </option>
         <option>
           <name>GeneralEnableMisra</name>
@@ -2040,6 +2040,12 @@
     <group>
       <name>dev</name>
       <file>
+        <name>$PROJ_DIR$\..\..\core\dev\io.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\core\dev\io.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$\..\..\core\dev\led.c</name>
       </file>
       <file>
@@ -2065,6 +2071,12 @@
         <file>
           <name>$PROJ_DIR$\..\..\cpu\cc253x\dev\clock.c</name>
         </file>
+        <file>
+          <name>$PROJ_DIR$\..\..\cpu\cc253x\dev\uart.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\..\cpu\cc253x\dev\uart.h</name>
+        </file>
       </group>
       <file>
         <name>$PROJ_DIR$\..\..\cpu\cc253x\cc253x.h</name>
@@ -2089,6 +2101,9 @@
       <name>cc2530dk</name>
       <group>
         <name>dev</name>
+        <file>
+          <name>$PROJ_DIR$\..\..\platform\cc2530dk\dev\button.c</name>
+        </file>
         <file>
           <name>$PROJ_DIR$\..\..\platform\cc2530dk\dev\leds-arch.c</name>
         </file>

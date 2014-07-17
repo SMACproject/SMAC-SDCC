@@ -36,6 +36,10 @@
 
 #ifndef LED_H_
 #define LED_H_
+#define LED1 0x01
+#define LED2 0x02
+#define LED3 0x04
+#define LEDS_ALL (LED1|LED2|LED3) //0x07
 
 #ifdef __cplusplus
 extern "C" {

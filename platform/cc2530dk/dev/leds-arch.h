@@ -37,13 +37,14 @@
 #ifndef LED_ARCH_H_
 #define LED_ARCH_H_
 
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-  void leds_arch_init(void);
-  void leds_arch_on(unsigned char leds);
-  void leds_arch_off(unsigned char leds);
+void leds_arch_init(void);
+void leds_arch_on(unsigned char leds);
+void leds_arch_off(unsigned char leds);
 
 #ifdef __cplusplus
 }

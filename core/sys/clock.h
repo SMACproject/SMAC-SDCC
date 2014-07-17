@@ -41,6 +41,7 @@
 extern "C" {
 #endif
 
+void clock_init(void);
 
 #ifdef __cplusplus
 }
