@@ -43,8 +43,7 @@ extern "C" {
 #endif
 
 void leds_arch_init(void);
-void leds_arch_on(unsigned char leds);
-void leds_arch_off(unsigned char leds);
+void leds_arch_set(unsigned char leds);
 
 #ifdef __cplusplus
 }

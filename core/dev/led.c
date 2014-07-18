@@ -46,7 +46,7 @@ void leds_init(void) {
 leds_on(unsigned char ledv)
 {
   leds = leds | ledv;
-  leds_arch_on(leds);
+  leds_arch_set(leds);
   
 }
 /*---------------------------------------------------------------------------*/
@@ -54,12 +54,12 @@ void
 leds_off(unsigned char ledv)
 {
   leds = leds & ~ledv;
-   leds_arch_on(leds);
+   leds_arch_set(leds);
 }
 /*---------------------------------------------------------------------------*/
 void
 leds_toggle(unsigned char ledv)
 {
-  leds_arch_on(leds ^ ledv);
-  leds_arch_off(leds ^ ledv);
+  leds_arch_set(leds ^ ledv);
+  leds_arch_set(leds ^ ledv);
 }

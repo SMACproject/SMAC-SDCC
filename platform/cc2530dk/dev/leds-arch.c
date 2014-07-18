@@ -52,7 +52,7 @@ void leds_arch_init(void) {
 	P1DIR = P1DIR | 0x10;
 }
   void
-leds_arch_on(unsigned char leds)
+leds_arch_set(unsigned char leds)
 {
   LED1_PIN = leds & 0x01;
   LED2_PIN = (leds & 0x02) >> 1;
