@@ -1,0 +1,60 @@
+OBJECTDIR = obj_$(TARGET)
+
+MODULES += core/sys core/dev
+
+targets:
+	@ls -1 $(CONTIKI)/platform $(TARGETDIRS) | grep -v CVS
+
+### Include target makefile (TODO Unsafe?)
+
+target_makefile := $(wildcard $(SMAC)/platform/$(TARGET)/Makefile.$(TARGET) ${foreach TDIR, $(TARGETDIRS), $(TDIR)/$(TARGET)/Makefile.$(TARGET)})
+
+# Check if the target makefile exists, and create the object directory if necessary.
+ifeq ($(strip $(target_makefile)),)
+  ${error The target platform "$(TARGET)" does not exist (maybe it was misspelled?)}
+else
+  ifneq (1, ${words $(target_makefile)})
+    ${error More than one TARGET Makefile found: $(target_makefile)}
+  endif
+  include $(target_makefile)
+endif
+
+ifdef MODULES
+  UNIQUEMODULES = $(call uniq,$(MODULES))
+  MODULESSUBST = ${subst /,-,$(UNIQUEMODULES)}
+  MODULEDIRS = ${wildcard ${addprefix $(SMAC)/, $(UNIQUEMODULES)}}
+  MODULES_SOURCES = ${foreach d, $(MODULEDIRS), ${subst ${d}/,,${wildcard $(d)/*.c}}}
+  SMAC_SOURCEFILES += $(MODULES_SOURCES)
+  APPDS += $(MODULEDIRS)
+endif
+
+
+### Verbosity control. Use  make V=1  to get verbose builds.
+
+ifeq ($(V),1)
+  TRACE_CC =
+  TRACE_LD =
+  TRACE_AR =
+  TRACE_AS =
+  Q=
+else
+  TRACE_CC = @echo "  CC       " $<
+  TRACE_LD = @echo "  LD       " $@
+  TRACE_AR = @echo "  AR       " $@
+  TRACE_AS = @echo "  AS       " $<
+  Q=@
+endif
+
+clean:
+	-rm -f *~ *core core *.srec \
+	*.lst *.map \
+	*.cprg *.bin *.data contiki*.a *.firmware core-labels.S *.ihex *.ini \
+	*.ce *.co
+	rm -rf $(CLEAN)
+	-rm -rf $(OBJECTDIR)
+
+distclean: clean
+	-rm -f ${addsuffix .$(TARGET),$(SMAC_PROJECT)}
+	
+-include $(SMAC)/platform/$(TARGET)/Makefile.customrules-$(TARGET)
+

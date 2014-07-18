@@ -1,0 +1,34 @@
+SMAC_TARGET_DIRS = . dev
+
+SMAC_TARGET_MAIN = $ (addprefix $(OBJECTDIR)/, main.rel)
+
+SMAC_TARGET_SOURCEFILES = main.c
+SMAC_TARGET_SOURCEFILES += button.c
+SMAC_TARGET_SOURCEFILES += leds-arch.c
+
+SMAC_SOURCEFILES += $(SMAC_TARGET_SOURCEFILES)
+
+CLEAN +=*.cc2530dk
+
+FORCE:
+
+# .sensinode target so we can behave similar to other targets
+%.$(TARGET): %.hex FORCE
+	cp $< $(<:.hex=.$(TARGET))
+	@echo "\nReport"
+	@echo "==============="
+	@echo 'Code footprint:'
+	@echo    'Area                                Addr        Size' \
+	         '         Decimal'
+	@echo    '----------------------------------  --------    --------' \
+	         '     --------'
+	@echo -n 'HOME,CSEG,CONST,XINIT,GS*           $(HOME_START)    '
+	@egrep ',CODE\)' $(<:.hex=.map) | egrep -v '(^BANK[1-9][^=])' | uniq | \
+	awk '{ SUM += $$5 } END { printf "%08X =    %8d", SUM, SUM }'
+	@echo '. bytes (REL,CON,CODE)'
+	@egrep '(^BANK[1-9][^=])' $(<:.hex=.map) | uniq | sort
+	@egrep -A 5 'Other memory' $(<:.hex=.mem)
+	
+SMAC_CPU = $(SMAC)/cpu/cc253x
+include $(SMAC_CPU)/Makefile.cc253x
+

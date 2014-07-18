@@ -1,0 +1,33 @@
+### Compiler definitions
+CC       = sdcc
+LD       = sdcc
+AS       = sdcc
+AR       = sdar
+OBJCOPY  = objcopy
+STRIP    = strip
+
+### Hex file conversions
+PACKIHX    = packihx
+SREC_CAT   = srec_cat
+SREC_FLAGS = -disable_sequence_warnings
+
+MEMORY_MODEL = large
+HIGH_FLASH_BANK = 7
+START_ADDR = 0x00000
+CODE_SIZE = 0x10000
+
+CFLAGS  += --model-$(MEMORY_MODEL) --stack-auto --std-c99
+CFLAGS  +=  -DCC2530_LAST_FLASH_BANK=$(HIGH_FLASH_BANK)
+CFLAGS  += --fomit-frame-pointer
+
+### Disable warning 110 (EVELYN the modified dog) and 126 (unreachable code)
+CFLAGS += --disable-warning 110 --disable-warning 126
+
+LDFLAGS += --model-$(MEMORY_MODEL) --stack-auto --out-fmt-ihx
+LDFLAGS += --xram-loc 0x0000 --xram-size 0x1F00
+LDFLAGS += --code-loc $(START_ADDR) --code-size $(CODE_SIZE)
+
+SMAC_CPU_DIRS = . dev
+SMAC_SOURCEFILES += clock.c uart.c
+SMAC_PLATFORM_DIRS = $(PLATFORM_APPDIRS) \
+	$(addprefix $(SMAC)/platform/$(TARGET)/,$(SMAC_TARGET_DIRS))

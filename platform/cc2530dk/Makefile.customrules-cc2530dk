@@ -1,0 +1,1 @@
+include $(SMAC_CPU)/Makefile.customrules-cc253x

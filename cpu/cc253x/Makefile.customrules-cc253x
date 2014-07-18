@@ -1,0 +1,10 @@
+### Build non-banked firmware
+%.ihx: $(OBJECTDIR)/%.app.rel $(SMAC_TARGET_MAIN) smac-$(TARGET).lib
+	$(TRACE_LD)
+	$(Q)$(LD) $(LDFLAGS) -o $@ $(SMAC_TARGET_MAIN) $(OBJECTDIR)/$*.app.rel -llibsdcc.lib -lsmac-$(TARGET).lib
+
+%.hex: %.ihx
+	$(PACKIHX) $< > $@
+
+	
+	
