@@ -27,7 +27,29 @@ LDFLAGS += --model-$(MEMORY_MODEL) --stack-auto --out-fmt-ihx
 LDFLAGS += --xram-loc 0x0000 --xram-size 0x1F00
 LDFLAGS += --code-loc $(START_ADDR) --code-size $(CODE_SIZE)
 
+### Our object files are .rel, so we can't use the default finalize dependency
+### generation. Override here.
+define FINALIZE_SDCC_DEPENDENCY
+cp $(@:.rel=.d) $(@:.rel=.$$$$); \
+sed -e 's/#.*//' -e 's/^[^:]*: *//' -e 's/ *\\$$//' \
+    -e '/^$$/ d' -e 's/$$/ :/' < $(@:.rel=.$$$$) >> $(@:.rel=.d); \
+rm -f $(@:.rel=.$$$$)
+endef
+
+### CPU-dependent cleanup files
+CLEAN += *.lnk *.lk *.sym *.lib *.ihx *.rel *.mem *.rst *.asm *.hex
+CLEAN += *.omf *.cdb *.banks *.flags *.banked-hex
+CLEAN += symbols.c symbols.h
+
 SMAC_CPU_DIRS = . dev
 SMAC_SOURCEFILES += clock.c uart.c
 SMAC_PLATFORM_DIRS = $(PLATFORM_APPDIRS) \
 	$(addprefix $(SMAC)/platform/$(TARGET)/,$(SMAC_TARGET_DIRS))
+	
+oname = $(patsubst %.c,%.rel,$(patsubst %.S,%.rel,$(1)))
+
+SMAC_OBJECTFILES = $(addprefix $(OBJECTDIR)/, \
+	$(call oname, $(SMAC_SOURCEFILES)))
+
+PROJECT_OBJECTFILES = $(addprefix $(OBJECTDIR)/, \
+	$(call oname, $(PROJECT_SOURCEFILES)))

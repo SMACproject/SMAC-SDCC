@@ -2,8 +2,26 @@ OBJECTDIR = obj_$(TARGET)
 
 MODULES += core/sys core/dev
 
+SMACDIRS += ${addprefix $(SMAC)/core/,dev sys .} 
+
 targets:
-	@ls -1 $(CONTIKI)/platform $(TARGETDIRS) | grep -v CVS
+	@ls -1 $(SMAC)/platform $(TARGETDIRS) | grep -v CVS
+
+#uniq = $(if $1,$(firstword $1) $(call uniq,$(filter-out $(firstword $1),$1)))
+
+### Include application makefiles
+
+ifdef APPS
+ APPDS = ${wildcard ${foreach DIR, $(APPDIRS), ${addprefix $(DIR)/, $(APPS)}}} \
+           ${wildcard ${addprefix $(SMAC)/apps/, $(APPS)} \
+          ${addprefix $(SMAC)/platform/$(TARGET)/apps/, $(APPS)} \
+         $(APPS)}
+ APPINCLUDES = ${foreach APP, $(APPS), ${wildcard ${foreach DIR, $(APPDS), $(DIR)/Makefile.$(APP)}}}
+ -include $(APPINCLUDES)
+ APP_SOURCES = ${foreach APP, $(APPS), $($(APP)_src)}
+ DSC_SOURCES = ${foreach APP, $(APPS), $($(APP)_dsc)}
+ SMAC_SOURCEFILES += $(APP_SOURCES) $(DSC_SOURCES)
+endif
 
 ### Include target makefile (TODO Unsafe?)
 
@@ -45,10 +63,15 @@ else
   Q=@
 endif
 
+SOURCEDIRS = . $(PROJECTDIRS) $(SMAC_TARGET_DIRS_CONCAT) \
+          $(SMAC_CPU_DIRS_CONCAT) $(SMACDIRS) $(APPDS) ${dir $(target_makefile)}
+          
+CFLAGS += ${addprefix -I,$(SOURCEDIRS) $(SMAC)}
+
 clean:
 	-rm -f *~ *core core *.srec \
 	*.lst *.map \
-	*.cprg *.bin *.data contiki*.a *.firmware core-labels.S *.ihex *.ini \
+	*.cprg *.bin *.data smac*.a *.firmware core-labels.S *.ihex *.ini \
 	*.ce *.co
 	rm -rf $(CLEAN)
 	-rm -rf $(OBJECTDIR)
@@ -58,3 +81,77 @@ distclean: clean
 	
 -include $(SMAC)/platform/$(TARGET)/Makefile.customrules-$(TARGET)
 
+ifndef CUSTOM_RULE_C_TO_CE
+%.ce: %.c
+	$(TRACE_CC)
+	$(Q)$(CC) $(CFLAGS) -DAUTOSTART_ENABLE -c $< -o $@
+	$(STRIP) --strip-unneeded -g -x $@
+endif
+
+ifndef CUSTOM_RULE_C_TO_OBJECTDIR_O
+$(OBJECTDIR)/%.o: %.c | $(OBJECTDIR)
+	$(TRACE_CC)
+	$(Q)$(CC) $(CFLAGS) -MMD -c $< -o $@
+	@$(FINALIZE_DEPENDENCY)
+endif
+
+ifndef CUSTOM_RULE_S_TO_OBJECTDIR_O
+$(OBJECTDIR)/%.o: %.S | $(OBJECTDIR)
+	$(TRACE_AS)
+	$(Q)$(AS) $(ASFLAGS) -o $@ $<
+endif
+
+ifndef CUSTOM_RULE_C_TO_O
+%.o: %.c
+	$(TRACE_CC)
+	$(Q)$(CC) $(CFLAGS) -c $< -o $@
+endif
+
+
+ifndef CUSTOM_RULE_C_TO_CO
+%.co: %.c
+	$(TRACE_CC)
+	$(Q)$(CC) $(CFLAGS) -DAUTOSTART_ENABLE -c $< -o $@
+endif
+
+ifndef AROPTS
+  AROPTS = rcf
+endif
+
+ifndef CUSTOM_RULE_ALLOBJS_TO_TARGETLIB
+smac-$(TARGET).a: $(SMAC_OBJECTFILES)
+	$(TRACE_AR)
+	$(Q)$(AR) $(AROPTS) $@ $^
+endif
+
+ifndef LD
+  LD = $(CC)
+endif
+
+ifndef CUSTOM_RULE_LINK
+%.$(TARGET): %.co $(PROJECT_OBJECTFILES) $(PROJECT_LIBRARIES) smac-$(TARGET).a
+	$(TRACE_LD)
+	$(Q)$(LD) $(LDFLAGS) $(TARGET_STARTFILES) ${filter-out %.a,$^} \
+	    ${filter %.a,$^} $(TARGET_LIBFILES) -o $@
+endif
+
+%.ramprof: %.$(TARGET)
+	$(NM) -S -td --size-sort $< | grep -i " [abdrw] " | cut -d' ' -f2,4
+
+%.flashprof: %.$(TARGET)
+	$(NM) -S -td --size-sort $< | grep -i " [t] " | cut -d' ' -f2,4
+
+# Don't treat %.$(TARGET) as an intermediate file because it is
+# in fact the primary target.
+.PRECIOUS: %.$(TARGET)
+
+# Cancel the predefined implict rule for compiling and linking
+# a single C source into a binary to force GNU make to consider
+# the match-anything rule below instead.
+%: %.c
+
+# Match-anything pattern rule to allow the project makefiles to
+# abstract from the actual binary name. It needs to contain some
+# command in order to be a rule, not just a prerequisite.
+%: %.$(TARGET)
+	@

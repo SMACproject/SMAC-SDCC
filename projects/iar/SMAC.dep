@@ -7,9 +7,9 @@
     <name>Debug</name>
     <outputs>
       <file>$PROJ_DIR$\..\..\core\dev\io.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\blink.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\leds-arch.r51</file>
       <file>$PROJ_DIR$\Debug\Obj\main.r51</file>
-      <file>$TOOLKIT_DIR$\lib\clib\cl-pli-nsid-1e16x01.r51</file>
+      <file>$PROJ_DIR$\Debug\Obj\blink.pbi</file>
       <file>$PROJ_DIR$\..\..\core\dev\io.c</file>
       <file>$PROJ_DIR$\..\..\core\dev\led.c</file>
       <file>$PROJ_DIR$\..\..\core\dev\led.h</file>
@@ -26,12 +26,11 @@
       <file>$PROJ_DIR$\..\..\platform\drugdelivery\config.h</file>
       <file>$PROJ_DIR$\..\..\platform\cc2530dk\config.h</file>
       <file>$PROJ_DIR$\..\..\platform\cc2530dk\main.c</file>
-      <file>$PROJ_DIR$\Debug\Obj\led.pbi</file>
       <file>$PROJ_DIR$\..\..\platform\drugdelivery\main.c</file>
-      <file>$PROJ_DIR$\Debug\Obj\blink.r51</file>
       <file>$TOOLKIT_DIR$\config\devices\_generic\lnk51ew_8052.xcl</file>
-      <file>$TOOLKIT_DIR$\src\lib\dlib\main.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\leds-arch.r51</file>
+      <file>$PROJ_DIR$\Debug\Obj\led.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\blink.r51</file>
+      <file>$TOOLKIT_DIR$\lib\clib\cl-pli-nsid-1e16x01.r51</file>
       <file>$PROJ_DIR$\Debug\Obj\clock.pbi</file>
       <file>$TOOLKIT_DIR$\inc\clib\stdbool.h</file>
       <file>$PROJ_DIR$\Debug\Exe\SMAC.d51</file>
@@ -41,36 +40,33 @@
       <file>$PROJ_DIR$\Debug\Obj\led.r51</file>
       <file>$PROJ_DIR$\Debug\Obj\main.pbi</file>
       <file>$PROJ_DIR$\Debug\Obj\button.r51</file>
-      <file>$PROJ_DIR$\..\..\..\..\IAR Systems\IR Projects\test2\interrupt.c</file>
       <file>$PROJ_DIR$\Debug\Obj\leds-arch.pbi</file>
       <file>$PROJ_DIR$\Debug\Obj\io.r51</file>
-      <file>$PROJ_DIR$\..\..\..\..\IAR Systems\IR Projects\test2\clock.c</file>
       <file>$PROJ_DIR$\Debug\Obj\io.pbi</file>
       <file>$PROJ_DIR$\Debug\Obj\uart.r51</file>
       <file>$PROJ_DIR$\Debug\Obj\uart.pbi</file>
       <file>$PROJ_DIR$\Debug\Obj\button.pbi</file>
       <file>$PROJ_DIR$\..\..\platform\cc2530dk\dev\uart.c</file>
-      <file>$PROJ_DIR$\..\..\..\..\IAR Systems\IR Projects\test2\button.c</file>
     </outputs>
     <file>
       <name>$PROJ_DIR$\..\..\core\dev\io.c</name>
       <outputs>
         <tool>
-          <name>ICC8051</name>
-          <file> 37</file>
+          <name>BICOMP</name>
+          <file> 36</file>
         </tool>
         <tool>
-          <name>BICOMP</name>
-          <file> 39</file>
+          <name>ICC8051</name>
+          <file> 35</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
-          <name>ICC8051</name>
+          <name>BICOMP</name>
           <file> 11</file>
         </tool>
         <tool>
-          <name>BICOMP</name>
+          <name>ICC8051</name>
           <file> 11</file>
         </tool>
       </inputs>
@@ -79,22 +75,22 @@
       <name>$PROJ_DIR$\..\..\core\dev\led.c</name>
       <outputs>
         <tool>
-          <name>ICC8051</name>
-          <file> 32</file>
+          <name>BICOMP</name>
+          <file> 22</file>
         </tool>
         <tool>
-          <name>BICOMP</name>
-          <file> 20</file>
+          <name>ICC8051</name>
+          <file> 31</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
-          <name>ICC8051</name>
-          <file> 31</file>
+          <name>BICOMP</name>
+          <file> 30</file>
         </tool>
         <tool>
-          <name>BICOMP</name>
-          <file> 31</file>
+          <name>ICC8051</name>
+          <file> 30</file>
         </tool>
       </inputs>
     </file>
@@ -102,22 +98,22 @@
       <name>$PROJ_DIR$\..\..\cpu\cc253x\dev\clock.c</name>
       <outputs>
         <tool>
-          <name>ICC8051</name>
-          <file> 30</file>
+          <name>BICOMP</name>
+          <file> 25</file>
         </tool>
         <tool>
-          <name>BICOMP</name>
-          <file> 26</file>
+          <name>ICC8051</name>
+          <file> 29</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
-          <name>ICC8051</name>
-          <file> 12 13 27</file>
+          <name>BICOMP</name>
+          <file> 12 13 26</file>
         </tool>
         <tool>
-          <name>BICOMP</name>
-          <file> 12 13 27</file>
+          <name>ICC8051</name>
+          <file> 12 13 26</file>
         </tool>
       </inputs>
     </file>
@@ -125,22 +121,22 @@
       <name>$PROJ_DIR$\..\..\cpu\cc253x\dev\uart.c</name>
       <outputs>
         <tool>
-          <name>ICC8051</name>
-          <file> 40</file>
+          <name>BICOMP</name>
+          <file> 38</file>
         </tool>
         <tool>
-          <name>BICOMP</name>
-          <file> 41</file>
+          <name>ICC8051</name>
+          <file> 37</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
-          <name>ICC8051</name>
-          <file> 12 13 27</file>
+          <name>BICOMP</name>
+          <file> 12 13 26</file>
         </tool>
         <tool>
-          <name>BICOMP</name>
-          <file> 12 13 27</file>
+          <name>ICC8051</name>
+          <file> 12 13 26</file>
         </tool>
       </inputs>
     </file>
@@ -148,21 +144,21 @@
       <name>$PROJ_DIR$\..\..\examples\blink\blink.c</name>
       <outputs>
         <tool>
-          <name>ICC8051</name>
-          <file> 22</file>
+          <name>BICOMP</name>
+          <file> 3</file>
         </tool>
         <tool>
-          <name>BICOMP</name>
-          <file> 1</file>
+          <name>ICC8051</name>
+          <file> 23</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
-          <name>ICC8051</name>
+          <name>BICOMP</name>
           <file> 6</file>
         </tool>
         <tool>
-          <name>BICOMP</name>
+          <name>ICC8051</name>
           <file> 6</file>
         </tool>
       </inputs>
@@ -171,22 +167,22 @@
       <name>$PROJ_DIR$\..\..\platform\cc2530dk\dev\button.c</name>
       <outputs>
         <tool>
-          <name>ICC8051</name>
-          <file> 34</file>
+          <name>BICOMP</name>
+          <file> 39</file>
         </tool>
         <tool>
-          <name>BICOMP</name>
-          <file> 42</file>
+          <name>ICC8051</name>
+          <file> 33</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
-          <name>ICC8051</name>
-          <file> 12 13 27</file>
+          <name>BICOMP</name>
+          <file> 12 13 26</file>
         </tool>
         <tool>
-          <name>BICOMP</name>
-          <file> 12 13 27</file>
+          <name>ICC8051</name>
+          <file> 12 13 26</file>
         </tool>
       </inputs>
     </file>
@@ -194,22 +190,22 @@
       <name>$PROJ_DIR$\..\..\platform\cc2530dk\dev\leds-arch.c</name>
       <outputs>
         <tool>
-          <name>ICC8051</name>
-          <file> 25</file>
+          <name>BICOMP</name>
+          <file> 34</file>
         </tool>
         <tool>
-          <name>BICOMP</name>
-          <file> 36</file>
+          <name>ICC8051</name>
+          <file> 1</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
-          <name>ICC8051</name>
-          <file> 12 13 27 6</file>
+          <name>BICOMP</name>
+          <file> 12 13 26 6</file>
         </tool>
         <tool>
-          <name>BICOMP</name>
-          <file> 12 13 27 6</file>
+          <name>ICC8051</name>
+          <file> 12 13 26 6</file>
         </tool>
       </inputs>
     </file>
@@ -217,40 +213,22 @@
       <name>$PROJ_DIR$\..\..\platform\cc2530dk\main.c</name>
       <outputs>
         <tool>
-          <name>ICC8051</name>
-          <file> 2</file>
+          <name>BICOMP</name>
+          <file> 32</file>
         </tool>
         <tool>
-          <name>BICOMP</name>
-          <file> 33</file>
+          <name>ICC8051</name>
+          <file> 2</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
-          <name>ICC8051</name>
-          <file> 8 7 6 0</file>
-        </tool>
-        <tool>
           <name>BICOMP</name>
           <file> 8 7 6 0</file>
         </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Debug\Exe\SMAC.d51</name>
-      <inputs>
         <tool>
-          <name>XLINK</name>
-          <file> 23 22 34 30 37 32 25 2 40 3</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Debug\Obj\SMAC.pbd</name>
-      <inputs>
-        <tool>
-          <name>BILINK</name>
-          <file> 1 42 26 39 20 36 33 41</file>
+          <name>ICC8051</name>
+          <file> 8 7 6 0</file>
         </tool>
       </inputs>
     </file>
@@ -259,30 +237,48 @@
       <outputs>
         <tool>
           <name>XLINK</name>
-          <file> 28</file>
+          <file> 27</file>
         </tool>
       </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Debug\Exe\SMAC.d51</name>
+      <inputs>
+        <tool>
+          <name>XLINK</name>
+          <file> 21 23 33 29 35 31 1 2 37 24</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Debug\Obj\SMAC.pbd</name>
+      <inputs>
+        <tool>
+          <name>BILINK</name>
+          <file> 3 39 25 36 22 34 32 38</file>
+        </tool>
+      </inputs>
     </file>
     <file>
       <name>$PROJ_DIR$\..\..\platform\cc2530dk\dev\uart.c</name>
       <outputs>
         <tool>
-          <name>ICC8051</name>
-          <file> 40</file>
+          <name>BICOMP</name>
+          <file> 38</file>
         </tool>
         <tool>
-          <name>BICOMP</name>
-          <file> 41</file>
+          <name>ICC8051</name>
+          <file> 37</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
-          <name>ICC8051</name>
-          <file> 12 13 27</file>
+          <name>BICOMP</name>
+          <file> 12 13 26</file>
         </tool>
         <tool>
-          <name>BICOMP</name>
-          <file> 12 13 27</file>
+          <name>ICC8051</name>
+          <file> 12 13 26</file>
         </tool>
       </inputs>
     </file>
