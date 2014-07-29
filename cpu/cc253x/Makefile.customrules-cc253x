@@ -13,6 +13,7 @@ CUSTOM_RULE_C_TO_OBJECTDIR_O=1
 CUSTOM_RULE_ALLOBJS_TO_TARGETLIB=1
 
 $(OBJECTDIR)/%.rel: %.c $(SEGMENT_RULES) | $(OBJECTDIR)
+	$(warning I'm here)
 	$(TRACE_CC)
 	$(Q)$(CC) $(call c_seg,$<,$@) $(CFLAGS) -c $< -o $@ -Wp,-MMD,$(@:.rel=.d),-MQ,$@
 	@$(FINALIZE_SDCC_DEPENDENCY)

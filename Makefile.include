@@ -88,24 +88,24 @@ ifndef CUSTOM_RULE_C_TO_CE
 	$(STRIP) --strip-unneeded -g -x $@
 endif
 
-ifndef CUSTOM_RULE_C_TO_OBJECTDIR_O
-$(OBJECTDIR)/%.o: %.c | $(OBJECTDIR)
-	$(TRACE_CC)
-	$(Q)$(CC) $(CFLAGS) -MMD -c $< -o $@
-	@$(FINALIZE_DEPENDENCY)
-endif
+#ifndef CUSTOM_RULE_C_TO_OBJECTDIR_O
+#$(OBJECTDIR)/%.o: %.c | $(OBJECTDIR)
+#	$(TRACE_CC)
+#	$(Q)$(CC) $(CFLAGS) -MMD -c $< -o $@
+#	@$(FINALIZE_DEPENDENCY)
+#endif
 
-ifndef CUSTOM_RULE_S_TO_OBJECTDIR_O
-$(OBJECTDIR)/%.o: %.S | $(OBJECTDIR)
-	$(TRACE_AS)
-	$(Q)$(AS) $(ASFLAGS) -o $@ $<
-endif
+#ifndef CUSTOM_RULE_S_TO_OBJECTDIR_O
+#$(OBJECTDIR)/%.o: %.S | $(OBJECTDIR)
+#	$(TRACE_AS)
+#	$(Q)$(AS) $(ASFLAGS) -o $@ $<
+#endif
 
-ifndef CUSTOM_RULE_C_TO_O
-%.o: %.c
-	$(TRACE_CC)
-	$(Q)$(CC) $(CFLAGS) -c $< -o $@
-endif
+#ifndef CUSTOM_RULE_C_TO_O
+#%.o: %.c
+#	$(TRACE_CC)
+#	$(Q)$(CC) $(CFLAGS) -c $< -o $@
+#endif
 
 
 ifndef CUSTOM_RULE_C_TO_CO

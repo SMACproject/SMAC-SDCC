@@ -11,6 +11,8 @@ PACKIHX    = packihx
 SREC_CAT   = srec_cat
 SREC_FLAGS = -disable_sequence_warnings
 
+SEGMENT_RULES = $(OBJECTDIR)/segment.rules
+
 MEMORY_MODEL = large
 HIGH_FLASH_BANK = 7
 START_ADDR = 0x00000
@@ -19,6 +21,8 @@ CODE_SIZE = 0x10000
 CFLAGS  += --model-$(MEMORY_MODEL) --stack-auto --std-c99
 CFLAGS  +=  -DCC2530_LAST_FLASH_BANK=$(HIGH_FLASH_BANK)
 CFLAGS  += --fomit-frame-pointer
+
+
 
 ### Disable warning 110 (EVELYN the modified dog) and 126 (unreachable code)
 CFLAGS += --disable-warning 110 --disable-warning 126
@@ -46,6 +50,16 @@ SMAC_SOURCEFILES += clock.c uart.c
 SMAC_PLATFORM_DIRS = $(PLATFORM_APPDIRS) \
 	$(addprefix $(SMAC)/platform/$(TARGET)/,$(SMAC_TARGET_DIRS))
 	
+SMAC_ASMOBJECTFILES = $(addprefix $(OBJECTDIR)/,$(SMAC_ASMFILES:.S=.rel))
+
+SMAC_CASMOBJECTFILES = $(addprefix $(OBJECTDIR)/, \
+	$(SMAC_CASMFILES:.cS=.rel))
+
+SMAC_PLATFORM_DIRS = $(addprefix $(SMAC)/platform/$(TARGET)/, $(SMAC_TARGET_DIRS))
+
+SMAC_CPU_DIRS_LIST    = $(addprefix $(SMAC_CPU)/, \
+                               $(SMAC_CPU_DIRS))
+
 oname = $(patsubst %.c,%.rel,$(patsubst %.S,%.rel,$(1)))
 
 SMAC_OBJECTFILES = $(addprefix $(OBJECTDIR)/, \
@@ -53,3 +67,4 @@ SMAC_OBJECTFILES = $(addprefix $(OBJECTDIR)/, \
 
 PROJECT_OBJECTFILES = $(addprefix $(OBJECTDIR)/, \
 	$(call oname, $(PROJECT_SOURCEFILES)))
+	
