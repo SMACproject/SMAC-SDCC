@@ -1,7 +1,7 @@
 ### Compilation rules
 
-SEGMENT_RULE_FILES = $(foreach dir, . $(CONTIKI_PLATFORM_DIRS) \
-	$(CONTIKI_CPU_DIRS_LIST), $(wildcard $(dir)/segment.rules) )
+SEGMENT_RULE_FILES = $(foreach dir, . $(SMAC_PLATFORM_DIRS) \
+	$(SMAC_CPU_DIRS_LIST), $(wildcard $(dir)/segment.rules) )
 
 # NB: Assumes SEGMENT_RULES was not overridden and is in $(OBJECTDIR)
 $(SEGMENT_RULES): $(SEGMENT_RULE_FILES) | $(OBJECTDIR)

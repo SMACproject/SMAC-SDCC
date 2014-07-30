@@ -11,7 +11,7 @@ PACKIHX    = packihx
 SREC_CAT   = srec_cat
 SREC_FLAGS = -disable_sequence_warnings
 
-SEGMENT_RULES = $(OBJECTDIR)/segment.rules
+#SEGMENT_RULES = $(OBJECTDIR)/segment.rules
 
 MEMORY_MODEL = large
 HIGH_FLASH_BANK = 7
@@ -22,8 +22,6 @@ CFLAGS  += --model-$(MEMORY_MODEL) --stack-auto --std-c99
 CFLAGS  +=  -DCC2530_LAST_FLASH_BANK=$(HIGH_FLASH_BANK)
 CFLAGS  += --fomit-frame-pointer
 
-
-
 ### Disable warning 110 (EVELYN the modified dog) and 126 (unreachable code)
 CFLAGS += --disable-warning 110 --disable-warning 126
 
@@ -31,34 +29,39 @@ LDFLAGS += --model-$(MEMORY_MODEL) --stack-auto --out-fmt-ihx
 LDFLAGS += --xram-loc 0x0000 --xram-size 0x1F00
 LDFLAGS += --code-loc $(START_ADDR) --code-size $(CODE_SIZE)
 
+
 ### Our object files are .rel, so we can't use the default finalize dependency
 ### generation. Override here.
-define FINALIZE_SDCC_DEPENDENCY
-cp $(@:.rel=.d) $(@:.rel=.$$$$); \
-sed -e 's/#.*//' -e 's/^[^:]*: *//' -e 's/ *\\$$//' \
-    -e '/^$$/ d' -e 's/$$/ :/' < $(@:.rel=.$$$$) >> $(@:.rel=.d); \
-rm -f $(@:.rel=.$$$$)
-endef
+#define FINALIZE_SDCC_DEPENDENCY
+#cp $(@:.rel=.d) $(@:.rel=.$$$$); \
+#sed -e 's/#.*//' -e 's/^[^:]*: *//' -e 's/ *\\$$//' \
+#    -e '/^$$/ d' -e 's/$$/ :/' < $(@:.rel=.$$$$) >> $(@:.rel=.d); \
+#rm -f $(@:.rel=.$$$$)
+#endef
 
 ### CPU-dependent cleanup files
 CLEAN += *.lnk *.lk *.sym *.lib *.ihx *.rel *.mem *.rst *.asm *.hex
 CLEAN += *.omf *.cdb *.banks *.flags *.banked-hex
-CLEAN += symbols.c symbols.h
+#CLEAN += symbols.c symbols.h
 
 SMAC_CPU_DIRS = . dev
+
+SMAC_TARGET_DIRS_CONCAT = ${addprefix $(SMAC)/platform/$(TARGET)/,$(SMAC_TARGET_DIRS)}
+SMAC_CPU_DIRS_CONCAT = ${addprefix $(SMAC_CPU)/,$(SMAC_CPU_DIRS)}
+
 SMAC_SOURCEFILES += clock.c uart.c
-SMAC_PLATFORM_DIRS = $(PLATFORM_APPDIRS) \
-	$(addprefix $(SMAC)/platform/$(TARGET)/,$(SMAC_TARGET_DIRS))
+	
+SMAC_ASMFILES +=
 	
 SMAC_ASMOBJECTFILES = $(addprefix $(OBJECTDIR)/,$(SMAC_ASMFILES:.S=.rel))
 
-SMAC_CASMOBJECTFILES = $(addprefix $(OBJECTDIR)/, \
-	$(SMAC_CASMFILES:.cS=.rel))
+SMAC_CASMOBJECTFILES = $(addprefix $(OBJECTDIR)/,$(SMAC_CASMFILES:.cS=.rel))
+#need to check casmfiles
 
-SMAC_PLATFORM_DIRS = $(addprefix $(SMAC)/platform/$(TARGET)/, $(SMAC_TARGET_DIRS))
+SMAC_PLATFORM_DIRS = $(addprefix $(SMAC)/platform/$(TARGET)/,$(SMAC_TARGET_DIRS))
 
-SMAC_CPU_DIRS_LIST    = $(addprefix $(SMAC_CPU)/, \
-                               $(SMAC_CPU_DIRS))
+SMAC_CPU_DIRS_LIST = $(addprefix $(SMAC_CPU)/,$(SMAC_CPU_DIRS))
+# not defined, maybe remove later
 
 oname = $(patsubst %.c,%.rel,$(patsubst %.S,%.rel,$(1)))
 

@@ -37,7 +37,7 @@
 #include "dev/led.h"
 
 void delay(void){
-volatile int i;
+	volatile int i;
 	i = 0;
 	while (i < 30000) {
 		i++;
@@ -45,10 +45,10 @@ volatile int i;
 }
 void user_main(void) {
   while(1){
-  leds_on(LED1|LED3);
-  delay();
-  leds_on(LED2);
-  delay();
-  leds_off(LED2);
+	  leds_on(LED1|LED3);
+	  delay();
+	  leds_on(LED2);
+	  delay();
+	  leds_off(LED2);
   }
 }
