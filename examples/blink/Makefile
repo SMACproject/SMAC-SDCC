@@ -21,11 +21,3 @@ SMAC = ../..
 include $(SMAC)/Makefile.include
 
 include $(SMAC)/platform/$(TARGET)/Makefile.$(TARGET)
-
-blink: $(SMAC_OBJECTFILES)
-	mkdir -p obj_cc2530dk
-	$(CC) $(CFLAGS) $^
-
-%.rel: %.c
-	mkdir -p obj_cc2530dk
-	$(CC) $(CFLAGS) -c $<
