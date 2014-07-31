@@ -47,5 +47,8 @@ int main (void)
   leds_init();
   leds_off(LEDS_ALL);
   io_init();
+
   user_main();
+
+  return 0;
 }

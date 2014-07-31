@@ -1,14 +1,22 @@
-SMAC_TARGET_DIRS = . dev
+# cc2530dk platform makefile
 
-SMAC_TARGET_MAIN = $ (addprefix $(OBJECTDIR)/, main.rel)
+ifndef SMAC
+  $(error SMAC not defined! You must specify where SMAC resides!)
+endif
+
+SMAC_TARGET_DIRS = . dev
+SMAC_TARGET_MAIN = $(addprefix $(OBJECTDIR)/,main.rel)
 
 SMAC_TARGET_SOURCEFILES = main.c
-SMAC_TARGET_SOURCEFILES += button.c
-SMAC_TARGET_SOURCEFILES += leds-arch.c
+SMAC_TARGET_SOURCEFILES += button.c leds-arch.c
 
 SMAC_SOURCEFILES += $(SMAC_TARGET_SOURCEFILES)
 
-CLEAN +=*.cc2530dk
+CLEAN += *.cc2530dk
+
+ifeq ($(UIP_CONF_IPV6),1)
+  SMAC_TARGET_SOURCEFILES += viztool.c
+endif
 
 FORCE:
 
@@ -28,7 +36,8 @@ FORCE:
 	@echo '. bytes (REL,CON,CODE)'
 	@egrep '(^BANK[1-9][^=])' $(<:.hex=.map) | uniq | sort
 	@egrep -A 5 'Other memory' $(<:.hex=.mem)
-	
-SMAC_CPU = $(SMAC)/cpu/cc253x
+
+### Define the CPU directory
+SMAC_CPU=$(SMAC)/cpu/cc253x
 include $(SMAC_CPU)/Makefile.cc253x
 

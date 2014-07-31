@@ -13,13 +13,12 @@ CUSTOM_RULE_C_TO_OBJECTDIR_O=1
 CUSTOM_RULE_ALLOBJS_TO_TARGETLIB=1
 
 $(OBJECTDIR)/%.rel: %.c $(SEGMENT_RULES) | $(OBJECTDIR)
-	$(warning I'm here)
 	$(TRACE_CC)
 	$(Q)$(CC) $(call c_seg,$<,$@) $(CFLAGS) -c $< -o $@ -Wp,-MMD,$(@:.rel=.d),-MQ,$@
 	@$(FINALIZE_SDCC_DEPENDENCY)
 
-contiki-$(TARGET).lib: $(CONTIKI_OBJECTFILES) $(PROJECT_OBJECTFILES) \
-	$(CONTIKI_ASMOBJECTFILES) $(CONTIKI_CASMOBJECTFILES)
+smac-$(TARGET).lib: $(SMAC_OBJECTFILES) $(PROJECT_OBJECTFILES) \
+	$(SMAC_ASMOBJECTFILES) $(SMAC_CASMOBJECTFILES)
 	rm -f $@
 	for target in $^; do echo $$target >> $@; done
 
@@ -34,11 +33,11 @@ $(OBJECTDIR)/%.app.rel: %.c $(SEGMENT_RULES) | $(OBJECTDIR)
 # .ihx is the sdcc binary output file
 ifeq ($(HAVE_BANKING),1)
 ### Build bankable firmware
-%.ihx: $(OBJECTDIR)/%.app.rel $(CONTIKI_TARGET_MAIN) contiki-$(TARGET).lib
+%.ihx: $(OBJECTDIR)/%.app.rel $(SMAC_TARGET_MAIN) smac-$(TARGET).lib
 	@echo "\nFirst Link"
 	@echo "==============="
 	$(TRACE_LD)
-	$(Q)$(CC) $(LDFLAGS) $(LD_PRE_FLAGS) -o $@ $(CONTIKI_TARGET_MAIN) $(OBJECTDIR)/$*.app.rel -llibsdcc.lib -lcontiki-$(TARGET).lib
+	$(Q)$(CC) $(LDFLAGS) $(LD_PRE_FLAGS) -o $@ $(SMAC_TARGET_MAIN) $(OBJECTDIR)/$*.app.rel -llibsdcc.lib -lsmac-$(TARGET).lib
 
 %.flags: %.ihx
 ### Allocate modules to banks and relocate object files
@@ -51,7 +50,7 @@ ifeq ($(HAVE_BANKING),1)
 	@echo "\nFinal Link"
 	@echo "==============="
 	$(TRACE_LD)
-	$(Q)$(LD) $(LDFLAGS) $(shell cat $<) -o $@ $(CONTIKI_TARGET_MAIN) $(OBJECTDIR)/$*.app.rel -llibsdcc.lib -lcontiki-$(TARGET).lib
+	$(Q)$(LD) $(LDFLAGS) $(shell cat $<) -o $@ $(SMAC_TARGET_MAIN) $(OBJECTDIR)/$*.app.rel -llibsdcc.lib -lsmac-$(TARGET).lib
 
 %.hex: %.banked-hex
 ### Post-process the hex file for programmers which dislike SDCC output hex format
@@ -71,8 +70,6 @@ ifeq ($(HAVE_BANKING),1)
 	srec_cat home.ihx -intel $(foreach file,$(FILES),$(file) -intel) -o $@ -intel
 	rm -f home.ihx $(FILES)
 else
-
-
 ### Build non-banked firmware
 %.ihx: $(OBJECTDIR)/%.app.rel $(SMAC_TARGET_MAIN) smac-$(TARGET).lib
 	$(TRACE_LD)
@@ -81,5 +78,3 @@ else
 %.hex: %.ihx
 	$(PACKIHX) $< > $@
 endif
-
-	

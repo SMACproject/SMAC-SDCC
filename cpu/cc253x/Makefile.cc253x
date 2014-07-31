@@ -11,12 +11,8 @@ PACKIHX    = packihx
 SREC_CAT   = srec_cat
 SREC_FLAGS = -disable_sequence_warnings
 
-#SEGMENT_RULES = $(OBJECTDIR)/segment.rules
-
-MEMORY_MODEL = large
-HIGH_FLASH_BANK = 7
-START_ADDR = 0x00000
-CODE_SIZE = 0x10000
+BANK_ALLOC = $(SMAC_CPU)/bank-alloc.py
+SEGMENT_RULES = $(OBJECTDIR)/segment.rules
 
 CFLAGS  += --model-$(MEMORY_MODEL) --stack-auto --std-c99
 CFLAGS  +=  -DCC2530_LAST_FLASH_BANK=$(HIGH_FLASH_BANK)
@@ -29,45 +25,98 @@ LDFLAGS += --model-$(MEMORY_MODEL) --stack-auto --out-fmt-ihx
 LDFLAGS += --xram-loc 0x0000 --xram-size 0x1F00
 LDFLAGS += --code-loc $(START_ADDR) --code-size $(CODE_SIZE)
 
+ASFLAGS += -plosgff
+
+AROPTS   = -rc
 
 ### Our object files are .rel, so we can't use the default finalize dependency
 ### generation. Override here.
-#define FINALIZE_SDCC_DEPENDENCY
-#cp $(@:.rel=.d) $(@:.rel=.$$$$); \
-#sed -e 's/#.*//' -e 's/^[^:]*: *//' -e 's/ *\\$$//' \
-#    -e '/^$$/ d' -e 's/$$/ :/' < $(@:.rel=.$$$$) >> $(@:.rel=.d); \
-#rm -f $(@:.rel=.$$$$)
-#endef
+define FINALIZE_SDCC_DEPENDENCY
+cp $(@:.rel=.d) $(@:.rel=.$$$$); \
+sed -e 's/#.*//' -e 's/^[^:]*: *//' -e 's/ *\\$$//' \
+    -e '/^$$/ d' -e 's/$$/ :/' < $(@:.rel=.$$$$) >> $(@:.rel=.d); \
+rm -f $(@:.rel=.$$$$)
+endef
+
+### SoC flavor (F256, F128, F64, F32) as the ID of the last flash bank (0...7)
+### We assume F256, project Makefile can override
+###
+### ToDo:
+###       Fix --code-size accordingly
+###       Fix the bank allocator to play for all flavors
+ifndef HIGH_FLASH_BANK
+  HIGH_FLASH_BANK=7
+endif
+
+### Banking Guesswork:
+### Generic examples do not specify banking.
+### We automatically turn it on if its unspecified and if we are building with
+### UIP_CONF_IPV6
+ifndef HAVE_BANKING
+  ifeq ($(UIP_CONF_IPV6),1)
+    HAVE_BANKING=1
+  else
+    HAVE_BANKING=0
+  endif
+endif
+
+### Does the project want us to offset the firmware?
+### define start address and max code size accordingly
+ifeq ($(OFFSET_FIRMWARE),1)
+  START_ADDR = 0x01000
+  HOME_START = 00001000
+  ifeq ($(HAVE_BANKING),1)
+    CODE_SIZE = 0x3F000
+  else
+    CODE_SIZE = 0x0F000
+  endif
+else
+  START_ADDR = 0x00000
+  HOME_START = 00000000
+  ifeq ($(HAVE_BANKING),1)
+    CODE_SIZE = 0x40000
+  else
+    CODE_SIZE = 0x10000
+  endif
+endif
+
+### Are we building with BANKing support?
+ifeq ($(HAVE_BANKING),1)
+  ## Yes
+  MEMORY_MODEL=huge
+  LDFLAGS += -Wl-r
+  LD_PRE_FLAGS += -Wl-bBANK1=0x018000
+  CFLAGS += -DHAVE_SDCC_BANKING
+  #use this in $(call c_seg,$<) to get segment for a source file.
+  c_seg = --codeseg $(shell python $(BANK_ALLOC) $1 $(SEGMENT_RULES) $2)
+else
+  ## No banking
+  MEMORY_MODEL=large
+  c_seg =
+endif 
 
 ### CPU-dependent cleanup files
 CLEAN += *.lnk *.lk *.sym *.lib *.ihx *.rel *.mem *.rst *.asm *.hex
 CLEAN += *.omf *.cdb *.banks *.flags *.banked-hex
-#CLEAN += symbols.c symbols.h
 
+### CPU-dependent directories
 SMAC_CPU_DIRS = . dev
 
-SMAC_TARGET_DIRS_CONCAT = ${addprefix $(SMAC)/platform/$(TARGET)/,$(SMAC_TARGET_DIRS)}
-SMAC_CPU_DIRS_CONCAT = ${addprefix $(SMAC_CPU)/,$(SMAC_CPU_DIRS)}
-
+### CPU-dependent source files
 SMAC_SOURCEFILES += clock.c uart.c
-	
 SMAC_ASMFILES +=
-	
+
 SMAC_ASMOBJECTFILES = $(addprefix $(OBJECTDIR)/,$(SMAC_ASMFILES:.S=.rel))
 
 SMAC_CASMOBJECTFILES = $(addprefix $(OBJECTDIR)/,$(SMAC_CASMFILES:.cS=.rel))
-#need to check casmfiles
 
 SMAC_PLATFORM_DIRS = $(addprefix $(SMAC)/platform/$(TARGET)/,$(SMAC_TARGET_DIRS))
 
-SMAC_CPU_DIRS_LIST = $(addprefix $(SMAC_CPU)/,$(SMAC_CPU_DIRS))
-# not defined, maybe remove later
+SMAC_CPU_DIRS_LIST    = $(addprefix $(SMAC_CPU)/,$(SMAC_CPU_DIRS))
 
 oname = $(patsubst %.c,%.rel,$(patsubst %.S,%.rel,$(1)))
 
-SMAC_OBJECTFILES = $(addprefix $(OBJECTDIR)/, \
-	$(call oname, $(SMAC_SOURCEFILES)))
+SMAC_OBJECTFILES = $(addprefix $(OBJECTDIR)/,$(call oname, $(SMAC_SOURCEFILES)))
 
-PROJECT_OBJECTFILES = $(addprefix $(OBJECTDIR)/, \
-	$(call oname, $(PROJECT_SOURCEFILES)))
-	
+PROJECT_OBJECTFILES = $(addprefix $(OBJECTDIR)/,$(call oname, $(PROJECT_SOURCEFILES)))
+

@@ -1,3 +1,20 @@
+# Eclipse projects
 .cproject
 .project
 .settings
+
+# OSX indexing
+.DS_Store
+
+# SDCC build artifacts
+smac-cc2530dk.lib
+*.ihx
+*.hex
+*.mem
+*.lk
+*.omf
+*.cdb
+*.banks
+*.map
+*.cc2530dk
+obj_*
