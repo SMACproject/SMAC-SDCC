@@ -13,7 +13,7 @@
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
    GNU General Public License for more details.
 
-   You should have received a copy of the GNU General Public License 
+   You should have received a copy of the GNU General Public License
    along with this library; see the file COPYING. If not, write to the
    Free Software Foundation, 51 Franklin Street, Fifth Floor, Boston,
    MA 02110-1301, USA.
@@ -78,6 +78,7 @@
 # define SFR16E(name, fulladdr) __sfr16 __at(fulladdr)                    name
 # define SFR32(name, addr)      __sfr32 __at(((addr+3UL)<<24) | ((addr+2UL)<<16) | ((addr+1UL)<<8) | addr) name
 # define SFR32E(name, fulladdr) __sfr32 __at(fulladdr)                    name
+# define __near_func
 
 /** Keil C51
   * http://www.keil.com

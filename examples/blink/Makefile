@@ -1,31 +1,14 @@
-PROJECT_SOURCEFILES +=
-#maybe add file if we have more than one .c file
-
+# A project name is equivalent to a source file in which user_main() resides
 SMAC_PROJECT = blink
 
+# Add additional source files here
+PROJECT_SOURCEFILES +=
+
+# Define the platform to which this project is going to be built
 TARGET = cc2530dk
-#no space after dk
-# makefile.target not needed
 
 all: $(SMAC_PROJECT)
-
-
-
-test:
-	$(warning $(SMAC_SOURCEFILES))
-	$(warning $(SMAC_OBJECTFILES))
-	$(warning $(PROJECT_OBJECTFILES))
 
 SMAC = ../..
 
 include $(SMAC)/Makefile.include
-
-include $(SMAC)/platform/$(TARGET)/Makefile.$(TARGET)
-
-blink: $(SMAC_OBJECTFILES)
-	mkdir -p obj_cc2530dk
-	$(CC) $(CFLAGS) $^
-
-%.rel: %.c
-	mkdir -p obj_cc2530dk
-	$(CC) $(CFLAGS) -c $<
