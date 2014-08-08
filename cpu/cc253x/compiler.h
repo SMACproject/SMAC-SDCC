@@ -79,6 +79,9 @@
 # define SFR32(name, addr)      __sfr32 __at(((addr+3UL)<<24) | ((addr+2UL)<<16) | ((addr+1UL)<<8) | addr) name
 # define SFR32E(name, fulladdr) __sfr32 __at(fulladdr)                    name
 # define __near_func
+# define ASM(...) __VA_ARGS__
+# define __asm_begin __asm
+# define __asm_end __endasm
 
 /** Keil C51
   * http://www.keil.com
@@ -91,6 +94,9 @@
 # define SFR16E(name, fulladdr) /* not supported */
 # define SFR32(name, fulladdr)  /* not supported */
 # define SFR32E(name, fulladdr) /* not supported */
+# define ASM(...) __VA_ARGS__
+# define __asm_begin __asm{
+# define __asm_end }
 
 /** Raisonance
   * http://www.raisonance.com
@@ -116,7 +122,9 @@
 # define SFR16E(name, fulladdr) /* not supported */
 # define SFR32(name, fulladdr)  __sfr __no_init volatile unsigned long name @ addr
 # define SFR32E(name, fulladdr) /* not supported */
-
+# define ASM(...) asm(#__VA_ARGS__);
+# define __asm_begin
+# define __asm_end
 /** Tasking / Altium
   * http://www.altium.com/tasking
  */

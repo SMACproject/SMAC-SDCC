@@ -38,6 +38,12 @@
 #include "sys/clock.h"
 #include "dev/led.h"
 #include "dev/io.h"
+#include "cc253x_rf.h"
+#include "hal_rf.h"
+
+#define SENSOR_ADDR          0x0CCA
+
+static basicRfCfg_t basicRfConfig;
 
 void user_main(void);
 
@@ -47,6 +53,9 @@ int main (void)
   leds_init();
   leds_off(LEDS_ALL);
   io_init();
+  basicRfConfig.myAddr = SENSOR_ADDR;
+  basicRfInit(&basicRfConfig);
+  basicRfReceiveOn();
 
   user_main();
 

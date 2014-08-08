@@ -38,7 +38,10 @@
 #include "compiler.h"
 
 void clock_init(void) {
-  CLKCONCMD = 0xC0;
-  CLKCONCMD &= ~0x40;
-  while(CLKCONSTA & 0x40);
+	/* turning on 32 kHz RCOSC and 16 MHz RCOSC */
+	CLKCONCMD = 0xC0;
+	/* switching from 16 MHz RCOSC to 32 MHz XOSC */
+	CLKCONCMD &= ~0x40;
+	/* waiting for the 32 MHz XOSC to become stable */
+	while(CLKCONSTA & 0x40);
 }

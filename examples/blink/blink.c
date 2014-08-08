@@ -35,11 +35,16 @@
  */
 
 #include "dev/led.h"
+#include <stdio.h>
+#include "config.h"
+
+#define TRANSMITTER 1
+#define RECEIVER 0
 
 void delay(void){
 	volatile int i;
 	i = 0;
-	while (i < 30000) {
+	while (i < 32000) {
 		i++;
 	}
 }
@@ -50,5 +55,13 @@ void user_main(void) {
 	  leds_on(LED2);
 	  delay();
 	  leds_off(LED2);
+	  printf("Hello World\n");
+	  delay();
+/*#if TRANSMITTER
+	  send_message("Hello");
+#endif
+#if RECEIVER
+	  receive_message();
+#endif*/
   }
 }
