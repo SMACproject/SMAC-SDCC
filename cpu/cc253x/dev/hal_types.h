@@ -55,16 +55,23 @@ typedef void (*VFPTR)(void);
 #ifndef CODE
 #define CODE
 #endif
+
 #ifndef XDATA
 #define XDATA
 #endif
+
 #define FAR
 #define NOP()  ASM("NOP")
 
+
 #define HAL_ISR_FUNC_DECLARATION(f,v)   \
     _PRAGMA(vector=v##_VECTOR) __interrupt void f(void)
+
+
 #define HAL_ISR_FUNC_PROTOTYPE(f,v)     \
     _PRAGMA(vector=v##_VECTOR) __interrupt void f(void)
+
+
 #define HAL_ISR_FUNCTION(f,v)           \
     HAL_ISR_FUNC_PROTOTYPE(f,v); HAL_ISR_FUNC_DECLARATION(f,v)
 
@@ -89,6 +96,9 @@ typedef void (*VFPTR)(void);
     _PRAGMA(vector=v) __near_func __interrupt void f(void)
 #define HAL_ISR_FUNCTION(f,v)           \
     HAL_ISR_FUNC_PROTOTYPE(f,v); HAL_ISR_FUNC_DECLARATION(f,v)
+
+#elif defined (SDCC)  || defined (__SDCC)
+
 
 #else
 #error "Unsupported architecture"
@@ -145,9 +155,8 @@ typedef unsigned short istate_t;
 typedef unsigned short istate_t;
 
 #elif (SDCC) || defined (__SDCC)
-#define CODE
-#define XDATA
-#define FAR
+#define HAL_ISR_FUNC_PROTOTYPE(f,v)     \
+		void f(void) __interrupt(v)
 
 /*****************************************************
  * Other compilers
@@ -155,8 +164,6 @@ typedef unsigned short istate_t;
 #else
 #error "Unsupported compiler"
 #endif
-
-
 
 #ifdef __cplusplus
 }
