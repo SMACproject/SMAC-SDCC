@@ -18,6 +18,7 @@
 #include "hal_lcd.h"
 #include "hal_joystick.h"
 #include "clock.h"
+#include "cc253x.h"
 
 
 // comment: should this be here?
@@ -26,7 +27,8 @@
 #define SPI_CLOCK_PHA_0        0x00
 #define SPI_CLOCK_PHA_1        0x40
 #define SPI_TRANSFER_MSB_FIRST 0x20
-#define SPI_TRANSFER_MSB_LAST  0x00
+#define SPI_TRANSFER_MSB_LAST
+#define chip				   2530
 
 /***********************************************************************************
 * LOCAL FUNCTIONS
@@ -61,13 +63,17 @@ void halBoardInit(void)
     HAL_LED_CLR_1();
 #else
     MCU_IO_DIR_OUTPUT(HAL_BOARD_IO_LED_1_PORT, HAL_BOARD_IO_LED_1_PIN);
-    HAL_LED_CLR_1();
+    P1_0 = 0;
+    //HAL_LED_CLR_1();
     MCU_IO_DIR_OUTPUT(HAL_BOARD_IO_LED_2_PORT, HAL_BOARD_IO_LED_2_PIN);
-    HAL_LED_CLR_2();
+    P1_1 = 0;
+    //HAL_LED_CLR_2();
     MCU_IO_DIR_OUTPUT(HAL_BOARD_IO_LED_3_PORT, HAL_BOARD_IO_LED_3_PIN);
-    HAL_LED_CLR_3();
+    P1_4 = 0;
+    //HAL_LED_CLR_3();
     MCU_IO_DIR_OUTPUT(HAL_BOARD_IO_LED_4_PORT, HAL_BOARD_IO_LED_4_PIN);
-    HAL_LED_CLR_4();
+    P0_1 = 0;
+    //HAL_LED_CLR_4();
 #endif
 
     // Buttons
@@ -181,7 +187,7 @@ void halLcdSpiDis(void)
   its documentation for any purpose.
 
   YOU FURTHER ACKNOWLEDGE AND AGREE THAT THE SOFTWARE AND DOCUMENTATION ARE
-  PROVIDED “AS IS” WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED,
+  PROVIDED IS IS WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED,
   INCLUDING WITHOUT LIMITATION, ANY WARRANTY OF MERCHANTABILITY, TITLE,
   NON-INFRINGEMENT AND FITNESS FOR A PARTICULAR PURPOSE. IN NO EVENT SHALL
   TEXAS INSTRUMENTS OR ITS LICENSORS BE LIABLE OR OBLIGATED UNDER CONTRACT,

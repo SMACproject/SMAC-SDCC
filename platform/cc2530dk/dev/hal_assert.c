@@ -1,71 +1,48 @@
 /***********************************************************************************
-  Filename:     hal_lcd.h
-
-  Description:  hal lcd library header file
-
+  Filename:     hal_assert.c
+    
+  Description:  Assert functionality
+    
 ***********************************************************************************/
-
-#ifndef HAL_LCD_H
-#define HAL_LCD_H
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 /***********************************************************************************
 * INCLUDES
 */
-#include "hal_types.h"
+#include "hal_assert.h"
+#include "hal_led.h"
+#include "hal_mcu.h"
+#include "hal_defs.h"
 
 
 /***********************************************************************************
- * CONSTANTS AND DEFINES
- */
-
-enum {
-    HAL_LCD_RADIX_DEC,
-    HAL_LCD_RADIX_HEX
-};
-
-enum {
-    HAL_LCD_LINE_1 = 1,
-    HAL_LCD_LINE_2,
-    HAL_LCD_LINE_3
-};
-
+* GLOBAL FUNCTIONS
+*/
 
 /***********************************************************************************
- * GLOBAL FUNCTIONS
- */
-
-void halLcdInit(void);
-void halLcdClear(void);
-void halLcdClearLine(uint8 line);
-void halLcdSetContrast(uint8 value);
-uint8 halLcdGetLineLength(void);
-uint8 halLcdGetNumLines(void);
-
-void halLcdWriteChar(uint8 line, uint8 col, char text);
-void halLcdWriteLine(uint8 line, const char XDATA *text);
-void halLcdWriteLines(const char XDATA *line1, const char XDATA *line2, const char XDATA *line3);
-
-void halLcdClearAllSpecChars(void);
-void halLcdCreateSpecChar(uint8 index, const char XDATA *p5x8Spec);
-void halLcdWriteSpecChar(uint8 line, uint8 col, uint8 index);
-
-void halLcd7SegWriteLine(const char *text);
-void halLcd7SegWriteSymbol(uint8 symbol, uint8 on);
-void halLcd7SegWriteValue(uint16 value, uint8 radix);
-
-#ifdef  __cplusplus
+* @fn          halAssertHandler
+*
+* @brief       Logic to handle an assert.
+*
+* @param       none
+*
+* @return      none
+***********************************************************************************
+*/
+void halAssertHandler(void)
+{
+    // execute code that handles asserts 
+    // blink all leds
+    while(TRUE){
+        halLedToggle(1);
+        halLedToggle(2);
+        halLedToggle(3);
+        halLedToggle(4);
+        halMcuWaitMs(50);
+    }
 }
-#endif
-
-/**********************************************************************************/
-#endif
 
 /***********************************************************************************
-  Copyright 2007-2009 Texas Instruments Incorporated. All rights reserved.
+  Copyright 2007 Texas Instruments Incorporated. All rights reserved.
 
   IMPORTANT: Your use of this Software is limited to those specific rights
   granted under the terms of a software license agreement between the user
@@ -82,7 +59,7 @@ void halLcd7SegWriteValue(uint16 value, uint8 radix);
 
   YOU FURTHER ACKNOWLEDGE AND AGREE THAT THE SOFTWARE AND DOCUMENTATION ARE
   PROVIDED IS IS WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED,
-  INCLUDING WITHOUT LIMITATION, ANY WARRANTY OF MERCHANTABILITY, TITLE,
+  INCLUDING WITHOUT LIMITATION, ANY WARRANTY OF MERCHANTABILITY, TITLE, 
   NON-INFRINGEMENT AND FITNESS FOR A PARTICULAR PURPOSE. IN NO EVENT SHALL
   TEXAS INSTRUMENTS OR ITS LICENSORS BE LIABLE OR OBLIGATED UNDER CONTRACT,
   NEGLIGENCE, STRICT LIABILITY, CONTRIBUTION, BREACH OF WARRANTY, OR OTHER
@@ -93,5 +70,5 @@ void halLcd7SegWriteValue(uint16 value, uint8 radix);
   (INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF), OR OTHER SIMILAR COSTS.
 
   Should you have any questions regarding your right to use this Software,
-  contact Texas Instruments Incorporated at www.TI.com.
+  contact Texas Instruments Incorporated at www.TI.com. 
 ***********************************************************************************/

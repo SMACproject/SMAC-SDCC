@@ -55,7 +55,7 @@ void user_main(void) {
 	  leds_on(LED2);
 	  delay();
 	  leds_off(LED2);
-	  printf("Hello World\n");
+	  //printf("Hello World\n");
 	  delay();
 /*#if TRANSMITTER
 	  send_message("Hello");

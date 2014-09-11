@@ -77,11 +77,11 @@
                                                 P##port##_##pin## = val; \
                                                 P##port##DIR |= BM(pin); )
 
-#define MCU_IO_SET_HIGH_PREP(port, pin)     st( P##port##_##pin## = 1; )
-#define MCU_IO_SET_LOW_PREP(port, pin)      st( P##port##_##pin## = 0; )
+#define MCU_IO_SET_HIGH_PREP(port, pin)     st( P##port##_##pin = 1; )//not giving a valid preprocessing token with ## after "pin"
+#define MCU_IO_SET_LOW_PREP(port, pin)      st( P##port##_##pin = 0; )//## is removed after pin
 
-#define MCU_IO_SET_PREP(port, pin, val)     st( P##port##_##pin## = val; )
-#define MCU_IO_TGL_PREP(port, pin)          st( P##port##_##pin## ^= 1; )
+#define MCU_IO_SET_PREP(port, pin, val)     st( P##port##_##pin = val; )//not giving a valid preprocessing token with ## after "pin"
+#define MCU_IO_TGL_PREP(port, pin)          st( P##port##_##pin ^= 1; )//## is removed after pin
 #define MCU_IO_GET_PREP(port, pin)          (P##port## & BM(pin))
 
 #define MCU_IO_DIR_INPUT_PREP(port, pin)    st( P##port##DIR &= ~BM(pin); )
@@ -105,7 +105,7 @@
   its documentation for any purpose.
 
   YOU FURTHER ACKNOWLEDGE AND AGREE THAT THE SOFTWARE AND DOCUMENTATION ARE
-  PROVIDED “AS IS” WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED,
+  PROVIDED IS IS WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED,
   INCLUDING WITHOUT LIMITATION, ANY WARRANTY OF MERCHANTABILITY, TITLE,
   NON-INFRINGEMENT AND FITNESS FOR A PARTICULAR PURPOSE. IN NO EVENT SHALL
   TEXAS INSTRUMENTS OR ITS LICENSORS BE LIABLE OR OBLIGATED UNDER CONTRACT,

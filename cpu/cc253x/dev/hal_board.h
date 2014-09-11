@@ -168,20 +168,27 @@
 
 
 // LCD SPI interface control
-#define LCD_SPI_BEGIN()            MCU_IO_SET_LOW(HAL_BOARD_IO_LCD_CS_PORT, HAL_BOARD_IO_LCD_CS_PIN)
+#define LCD_SPI_BEGIN()            st(P1_2 = 0;)//MCU_IO_SET_LOW(HAL_BOARD_IO_LCD_CS_PORT, HAL_BOARD_IO_LCD_CS_PIN)
 #define LCD_SPI_TX(x)              st( U1CSR &= ~0x02; U1DBUF = x; )
 #define LCD_SPI_RX()               U1DBUF
 #define LCD_SPI_WAIT_RXRDY()       st( while((U1CSR & 0x02) != 0x02); )
-#define LCD_SPI_END()              st( NOP(); NOP(); NOP(); NOP(); \
-                                       MCU_IO_SET_HIGH(HAL_BOARD_IO_LCD_CS_PORT, HAL_BOARD_IO_LCD_CS_PIN); )
+#define LCD_SPI_END()              st( __asm_begin \
+									ASM(nop) \
+									ASM(nop) \
+									ASM(nop) \
+									ASM(nop) \
+									__asm_end; \
+									P1_2 = 1;)
+                                    //MCU_IO_SET_HIGH(HAL_BOARD_IO_LCD_CS_PORT, HAL_BOARD_IO_LCD_CS_PIN); )
 
 // LCD pin control
-#define LCD_DO_WRITE()             MCU_IO_SET_HIGH(HAL_BOARD_IO_LCD_MODE_PORT, HAL_BOARD_IO_LCD_MODE_PIN)
+//#define LCD_DO_WRITE()             MCU_IO_SET_HIGH(HAL_BOARD_IO_LCD_MODE_PORT, HAL_BOARD_IO_LCD_MODE_PIN)
+# define LCD_DO_WRITE() 		   st(P1_2 = 0;)
 #define LCD_DO_CONTROL()           MCU_IO_SET_LOW(HAL_BOARD_IO_LCD_MODE_PORT, HAL_BOARD_IO_LCD_MODE_PIN)
 
 // Port initialization
-#define LCD_CTRL_INIT_PORTS()      st( MCU_IO_OUTPUT(HAL_BOARD_IO_LCD_CS_PORT, HAL_BOARD_IO_LCD_CS_PIN, 1); \
-                                       MCU_IO_OUTPUT(HAL_BOARD_IO_LCD_MODE_PORT, HAL_BOARD_IO_LCD_MODE_PIN, 1); )
+#define LCD_CTRL_INIT_PORTS()      st(P1_2 = 1; \ /*st( MCU_IO_OUTPUT(HAL_BOARD_IO_LCD_CS_PORT, HAL_BOARD_IO_LCD_CS_PIN, 1);*/ \
+                                   P0_0 = 1;)    //MCU_IO_OUTPUT(HAL_BOARD_IO_LCD_MODE_PORT, HAL_BOARD_IO_LCD_MODE_PIN, 1); )
 
 // HAL processing not required for this board
 #define HAL_PROCESS()

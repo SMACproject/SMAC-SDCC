@@ -5,8 +5,8 @@
 
 ***********************************************************************************/
 
-#include <hal_types.h>
-#include <hal_mcu.h>
+#include "hal_types.h"
+#include "hal_mcu.h"
 #include "clock.h"
 #include "hal_defs.h"
 #include "pwr_mode_manager.h"

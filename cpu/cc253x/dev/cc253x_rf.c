@@ -16,6 +16,8 @@
 #include "util.h"               // Using min()
 #include "string.h"
 
+#include "hal_int.h"
+
 /***********************************************************************************
 * CONSTANTS AND DEFINES
 */

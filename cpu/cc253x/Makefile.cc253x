@@ -103,7 +103,7 @@ CLEAN += *.omf *.cdb *.banks *.flags *.banked-hex
 SMAC_CPU_DIRS = . dev
 
 ### CPU-dependent source files
-SMAC_SOURCEFILES += clock.c uart.c cc253x_rf.c hal_mcu.c hal_rf.c hal_board.c
+SMAC_SOURCEFILES += clock.c uart.c cc253x_rf.c hal_mcu.c hal_rf.c hal_board.c pwr_mode_manager.c util.c ###hal_led.c
 SMAC_ASMFILES +=
 
 SMAC_ASMOBJECTFILES = $(addprefix $(OBJECTDIR)/,$(SMAC_ASMFILES:.S=.rel))

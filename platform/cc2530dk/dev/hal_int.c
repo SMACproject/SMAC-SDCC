@@ -1,71 +1,89 @@
 /***********************************************************************************
-  Filename:     hal_lcd.h
+  Filename:     hal_int.c
 
-  Description:  hal lcd library header file
+  Description:  HAL interrupt control
 
 ***********************************************************************************/
-
-#ifndef HAL_LCD_H
-#define HAL_LCD_H
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 /***********************************************************************************
 * INCLUDES
 */
 #include "hal_types.h"
-
-
-/***********************************************************************************
- * CONSTANTS AND DEFINES
- */
-
-enum {
-    HAL_LCD_RADIX_DEC,
-    HAL_LCD_RADIX_HEX
-};
-
-enum {
-    HAL_LCD_LINE_1 = 1,
-    HAL_LCD_LINE_2,
-    HAL_LCD_LINE_3
-};
-
+#include "hal_defs.h"
+#include "hal_int.h"
+#include "hal_board.h"
+#include "hal_int.h"
 
 /***********************************************************************************
- * GLOBAL FUNCTIONS
- */
+* GLOBAL FUNCTIONS
+*/
 
-void halLcdInit(void);
-void halLcdClear(void);
-void halLcdClearLine(uint8 line);
-void halLcdSetContrast(uint8 value);
-uint8 halLcdGetLineLength(void);
-uint8 halLcdGetNumLines(void);
-
-void halLcdWriteChar(uint8 line, uint8 col, char text);
-void halLcdWriteLine(uint8 line, const char XDATA *text);
-void halLcdWriteLines(const char XDATA *line1, const char XDATA *line2, const char XDATA *line3);
-
-void halLcdClearAllSpecChars(void);
-void halLcdCreateSpecChar(uint8 index, const char XDATA *p5x8Spec);
-void halLcdWriteSpecChar(uint8 line, uint8 col, uint8 index);
-
-void halLcd7SegWriteLine(const char *text);
-void halLcd7SegWriteSymbol(uint8 symbol, uint8 on);
-void halLcd7SegWriteValue(uint16 value, uint8 radix);
-
-#ifdef  __cplusplus
+/***********************************************************************************
+* @fn      halIntOn
+*
+* @brief   Enable global interrupts.
+*
+* @param   none
+*
+* @return  none
+*/
+void halIntOn(void)
+{
+    HAL_INT_ON();
 }
-#endif
 
-/**********************************************************************************/
-#endif
 
 /***********************************************************************************
-  Copyright 2007-2009 Texas Instruments Incorporated. All rights reserved.
+* @fn      halIntOff
+*
+* @brief   Turns global interrupts off.
+*
+* @param   none
+*
+* @return  none
+*/
+void halIntOff(void)
+{
+    HAL_INT_OFF();
+}
+
+
+/***********************************************************************************
+* @fn      halIntLock
+*
+* @brief   Turns global interrupts off and returns current interrupt state.
+*          Should always be used together with halIntUnlock().
+*
+* @param   none
+*
+* @return  uint16 - current interrupt state
+*/
+uint16 halIntLock(void)
+{
+    istate_t key;
+    HAL_INT_LOCK(key);
+    return(key);
+}
+
+
+/***********************************************************************************
+* @fn      halIntUnlock
+*
+* @brief   Set interrupt state back to the state it had before calling halIntLock().
+*          Should always be used together with halIntLock().
+*
+* @param   key
+*
+* @return  none
+*/
+void halIntUnlock(uint16 key)
+{
+    HAL_INT_UNLOCK(key);
+}
+
+
+/***********************************************************************************
+  Copyright 2007 Texas Instruments Incorporated. All rights reserved.
 
   IMPORTANT: Your use of this Software is limited to those specific rights
   granted under the terms of a software license agreement between the user
@@ -95,3 +113,4 @@ void halLcd7SegWriteValue(uint16 value, uint8 radix);
   Should you have any questions regarding your right to use this Software,
   contact Texas Instruments Incorporated at www.TI.com.
 ***********************************************************************************/
+

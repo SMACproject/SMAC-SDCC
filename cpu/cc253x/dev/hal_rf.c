@@ -17,6 +17,7 @@
 #include "util.h"
 #include "hal_types.h"
 #include "cc253x.h"
+#include "hal_assert.h"
 
 
 /***********************************************************************************

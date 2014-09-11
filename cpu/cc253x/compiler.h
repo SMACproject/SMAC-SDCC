@@ -82,6 +82,8 @@
 # define ASM(...) __VA_ARGS__
 # define __asm_begin __asm
 # define __asm_end __endasm
+# define XDATA __xdata
+# define NOP nop
 
 /** Keil C51
   * http://www.keil.com

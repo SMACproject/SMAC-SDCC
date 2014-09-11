@@ -8,7 +8,7 @@ SMAC_TARGET_DIRS = . dev
 SMAC_TARGET_MAIN = $(addprefix $(OBJECTDIR)/,main.rel)
 
 SMAC_TARGET_SOURCEFILES = main.c
-SMAC_TARGET_SOURCEFILES += button.c leds-arch.c
+SMAC_TARGET_SOURCEFILES += button.c leds-arch.c hal_lcd_srf05.c hal_assert.c hal_int.c hal_led.c
 
 SMAC_SOURCEFILES += $(SMAC_TARGET_SOURCEFILES)
 
