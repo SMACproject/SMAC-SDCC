@@ -36,6 +36,7 @@
 
 #include "cc253x.h"
 #include "compiler.h"
+#include "hal_types.h"
 
 void uart_init(void) {
   P0SEL = P0SEL | 0x0C;
@@ -62,7 +63,7 @@ void uart_init(void) {
   //&= ~0x01, 2's compliment
 }
 
-__near_func int putchar(int c) {
+NEAR_FUNC int putchar(int c) {
     if(c == '\n') {
 
       UTX0IF = 0;

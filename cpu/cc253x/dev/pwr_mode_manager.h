@@ -13,6 +13,7 @@
 #include "hal_defs.h"
 #include "hal_mcu.h"  
 #include "cc253x.h"
+#include "compiler.h"
 
 #ifndef     IDLE 
 #define     IDLE   0x04;

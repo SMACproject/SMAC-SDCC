@@ -36,7 +36,7 @@
  *   Based on information in:
  *   "CC253x System-on-Chip Solution for 2.4-GHz IEEE 802.15.4 and ZigBee®
  *    Applications"
- *   Literature Number: SWRU191B. April 2009–Revised September 2010
+ *   Literature Number: SWRU191B. April 2009 reevised September 2010
  *
  * \author
  *         George Oikonomou - <oikonomou@users.sourceforge.net>
@@ -196,8 +196,8 @@ SFR(ENCCS,     0xB3); /* Encryption/decryption control and status */
 
 /* DMA Controller */
 SFR(DMAIRQ,    0xD1); /* DMA interrupt flag */
-SFR(DMA1CFGL,  0xD2); /* DMA channel 1–4 configuration address low */
-SFR(DMA1CFGH,  0xD3); /* DMA channel 1–4 configuration address high */
+SFR(DMA1CFGL,  0xD2); /* DMA channel 1 configuration address low */
+SFR(DMA1CFGH,  0xD3); /* DMA channel 1 configuration address high */
 SFR(DMA0CFGL,  0xD4); /* DMA channel 0 configuration address low */
 SFR(DMA0CFGH,  0xD5); /* DMA channel 0 configuration address high */
 SFR(DMAARM,    0xD6); /* DMA channel armed */
@@ -328,7 +328,7 @@ SFR(U1GCR,     0xFC); /* USART 1 Generic control */
 /* Watchdog Timer */
 SFR(WDCTL,     0xC9); /* Watchdog Timer Control */
 /*---------------------------------------------------------------------------
- * XREG Registers (0x6000–0x63FF), excluding RF and USB registers
+ * XREG Registers (0x6000 0x63FF), excluding RF and USB registers
  * (Table 2.2, page 31)
  *---------------------------------------------------------------------------*/
 SFRX(MONMUX ,    0x61A6); /* Operational amplifier mode control (cc2530/31) */
@@ -541,16 +541,16 @@ SFRX(USBFRML,  0x620C); /* Current Frame Number (Low Byte) */
 SFRX(USBFRMH,  0x620D); /* Current Frame Number (High Byte) */
 SFRX(USBINDEX, 0x620E); /* Current-Endpoint Index Register */
 SFRX(USBCTRL,  0x620F); /* USB Control Register */
-SFRX(USBMAXI,  0x6210); /* Max. Packet Size for IN Endpoint{1–5} */
+SFRX(USBMAXI,  0x6210); /* Max. Packet Size for IN Endpoint{1} */
 SFRX(USBCS0,   0x6211); /* EP0 Control and Status (USBINDEX = 0) */
-SFRX(USBCSIL,  0x6211); /* IN EP{1–5} Control and Status, Low */
-SFRX(USBCSIH,  0x6212); /* IN EP{1–5} Control and Status, High */
-SFRX(USBMAXO,  0x6213); /* Max. Packet Size for OUT EP{1–5} */
-SFRX(USBCSOL,  0x6214); /* OUT EP{1–5} Control and Status, Low */
-SFRX(USBCSOH,  0x6215); /* OUT EP{1–5} Control and Status, High */
+SFRX(USBCSIL,  0x6211); /* IN EP{1} Control and Status, Low */
+SFRX(USBCSIH,  0x6212); /* IN EP{1} Control and Status, High */
+SFRX(USBMAXO,  0x6213); /* Max. Packet Size for OUT EP{1} */
+SFRX(USBCSOL,  0x6214); /* OUT EP{1} Control and Status, Low */
+SFRX(USBCSOH,  0x6215); /* OUT EP{1} Control and Status, High */
 SFRX(USBCNT0,  0x6216); /* Number of Received Bytes in EP0 FIFO (USBINDEX = 0) */
-SFRX(USBCNTL,  0x6216); /* Number of Bytes in EP{1–5} OUT FIFO, Low */
-SFRX(USBCNTH,  0x6217); /* Number of Bytes in EP{1–5} OUT FIFO, High */
+SFRX(USBCNTL,  0x6216); /* Number of Bytes in EP{1} OUT FIFO, Low */
+SFRX(USBCNTH,  0x6217); /* Number of Bytes in EP{1} OUT FIFO, High */
 SFRX(USBF0,    0x6220); /* Endpoint-0 FIFO */
 SFRX(USBF1,    0x6222); /* Endpoint-1 FIFO */
 SFRX(USBF2,    0x6224); /* Endpoint-2 FIFO */
@@ -621,8 +621,8 @@ SFRX(X_T3CC0,     0x70CD); /* Timer 3 channel 0 compare value */
 SFRX(X_T3CCTL1,   0x70CE); /* Timer 3 channel 1 compare control */
 SFRX(X_T3CC1,     0x70CF); /* Timer 3 channel 1 compare value */
 SFRX(X_DMAIRQ,    0x70D1); /* DMA interrupt flag */
-SFRX(X_DMA1CFGL,  0x70D2); /* DMA channel 1–4 configuration address low */
-SFRX(X_DMA1CFGH,  0x70D3); /* DMA channel 1–4 configuration address high */
+SFRX(X_DMA1CFGL,  0x70D2); /* DMA channel 1 configuration address low */
+SFRX(X_DMA1CFGH,  0x70D3); /* DMA channel 1 configuration address high */
 SFRX(X_DMA0CFGL,  0x70D4); /* DMA channel 0 configuration address low */
 SFRX(X_DMA0CFGH,  0x70D5); /* DMA channel 0 configuration address high */
 SFRX(X_DMAARM,    0x70D6); /* DMA channel armed */

@@ -44,12 +44,24 @@ typedef void (*VFPTR)(void);
  */
 
 /*****************************************************
+ * SDCC
+ */
+#if defined (__SDCC) || defined (SDCC)
+
+#define XDATA __xdata //remove on Mac
+#define NEAR_FUNC __near
+
+/*****************************************************
  * IAR MSP430
  */
-#ifdef __IAR_SYSTEMS_ICC__
+#elif defined __IAR_SYSTEMS_ICC__
 
 #define _PRAGMA(x) _Pragma(#x)
+#define NEAR_FUNC __near_func
 
+/*****************************************************
+ * ICC430
+ */
 #if defined __ICC430__
 
 #ifndef CODE
@@ -58,6 +70,10 @@ typedef void (*VFPTR)(void);
 
 #ifndef XDATA
 #define XDATA
+#endif
+
+#ifndef NEAR_FUNC
+#define NEAR_FUNC
 #endif
 
 #define FAR
@@ -84,6 +100,7 @@ typedef void (*VFPTR)(void);
 #ifndef BSP_H
 #define CODE   __code
 #define XDATA  __xdata
+#define NEAR_FUNC __near_func
 #endif
 
 #define FAR
@@ -97,7 +114,6 @@ typedef void (*VFPTR)(void);
 #define HAL_ISR_FUNCTION(f,v)           \
     HAL_ISR_FUNC_PROTOTYPE(f,v); HAL_ISR_FUNC_DECLARATION(f,v)
 
-#elif defined (SDCC)  || defined (__SDCC)
 
 
 #else
@@ -106,8 +122,7 @@ typedef void (*VFPTR)(void);
 
 
 /*****************************************************
- * KEIL 8051
- */
+ * KEIL 8051 */
 #elif defined __KEIL__
 #include <intrins.h>
 #define BIG_ENDIAN
@@ -116,6 +131,7 @@ typedef void (*VFPTR)(void);
 #define XDATA  xdata
 #define FAR
 #define NOP()  _nop_()
+#define NEAR_FUNC /* to be defined*/
 
 #define HAL_ISR_FUNC_DECLARATION(f,v)   \
     void f(void) interrupt v
@@ -129,7 +145,7 @@ typedef unsigned short istate_t;
 // Keil workaround
 #define __code  code
 #define __xdata xdata
-
+#define NEAR_FUNC /*to be defined*/
 
 /*****************************************************
  * WIN32
@@ -138,6 +154,7 @@ typedef unsigned short istate_t;
 
 #define CODE
 #define XDATA
+#define NEAR_FUNC
 #include "windows.h"
 #define FAR far
 #pragma warning (disable :4761)
@@ -151,6 +168,7 @@ typedef unsigned short istate_t;
 #define CODE
 #define XDATA
 #define FAR
+#define NEAR_FUNC
 
 typedef unsigned short istate_t;
 

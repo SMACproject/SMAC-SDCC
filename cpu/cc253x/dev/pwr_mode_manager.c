@@ -72,7 +72,7 @@ void halMcuSetLowPowerMode(uint8 mode){
   }
 
 //_Pragma("vector=P1INT_VECTOR")
-  __near_func  void PORT1_IRQ() __interrupt(P1INT_VECTOR)//#pragma vector not recognized, put the vector after interrupt
+  NEAR_FUNC  void PORT1_IRQ() __interrupt(P1INT_VECTOR)//#pragma vector not recognized, put the vector after interrupt
 {
   //P1IFG = ~(1 << 2);
   //IRCON2 = ~(1 << 3); 
@@ -80,7 +80,7 @@ void halMcuSetLowPowerMode(uint8 mode){
   
 
 //_Pragma("vector=P0INT_VECTOR")
-  __near_func  void PORT0_IRQ() __interrupt(P0INT_VECTOR)//#pragma vector not recognized, put the vector after interrupt
+  NEAR_FUNC  void PORT0_IRQ() __interrupt(P0INT_VECTOR)//#pragma vector not recognized, put the vector after interrupt
 {
   P0IFG = ~(1 << 0);
   IRCON = ~(1 << 5); 

@@ -34,12 +34,21 @@
  * 
  */
 
+#include "hal_mcu.h"
 #include "dev/led.h"
 #include <stdio.h>
 #include "config.h"
+#include <cc253x_rf.h>
+#include <hal_rf.h>
 
 #define TRANSMITTER 1
 #define RECEIVER 0
+
+// BasicRF address definitions
+#define PAN_ID               0x2005
+#define PC_ADDR              0xACC0
+#define SENSOR_ADDR          0x0CCA
+static basicRfCfg_t basicRfConfig;
 
 void delay(void){
 	volatile int i;
@@ -49,6 +58,7 @@ void delay(void){
 	}
 }
 void user_main(void) {
+	//basicRfConfig.panId = PAN_ID;
   while(1){
 	  leds_on(LED1|LED3);
 	  delay();
