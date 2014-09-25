@@ -30,6 +30,7 @@ void SPI1_Switch_SSN(uint8 SSN_, bool value);
 void SPI1_Send(unsigned char* SPI1TxBuf, unsigned int SPI1TxBufLength);
 void SPI1_Receive(unsigned char* SPI1RxBuf, unsigned char SPI1RxBufLength);
 void SPI1_Init(void);
+// SPI1_Send, SPI1_Receive, SPI1_Init not used in current radio test
 
 
 

@@ -50,6 +50,7 @@ typedef void (*VFPTR)(void);
 
 #define XDATA __xdata //remove on Mac
 #define NEAR_FUNC __near
+#define NOP()  ASM("NOP")
 
 /*****************************************************
  * IAR MSP430

@@ -55,7 +55,7 @@
 #define SET_CMP_OUT_C0   0x18     // Set Output on Compare Clear on 0
 #define CLR_CMP_OUT_S0   0x20     // Clear Output on Compare Set on 0
 #define SET_OUT_PIN      0x38     // Initialize Output pin
-#define MODE             0x04     // Compare Mode 
+#define MODE             0x04     // Compare Mode
 #define CAP_11           0x03     // Capture all edges
 #define CAP_10           0x02     // Capture Falling
 #define CAP_01           0x01     // Capture Rising

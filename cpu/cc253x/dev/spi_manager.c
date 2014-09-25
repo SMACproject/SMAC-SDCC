@@ -5,13 +5,17 @@
     1.0 2/09/2013
 ******************************************************************************/
 
+#if defined SDCC || defined (__SDCC)
+  #include "cc253x.h"
+#else
+  #include "ioCC2530.h"
+#endif
 
 #include "hal_types.h"
 #include "hal_defs.h"
 #include "hal_mcu.h"  
 #include "spi_manager.h"
 #include "clock.h"
-#include "ioCC2530.h"
 
 
 void SPI1_Switch_SSN(uint8 SSN_, bool value){
@@ -38,20 +42,24 @@ void SPI1_Send(unsigned char* SPI1TxBuf, unsigned int SPI1TxBufLength) {
 unsigned int SPI1TxIndex;
 for (SPI1TxIndex = 0; SPI1TxIndex < SPI1TxBufLength; SPI1TxIndex++) {
   U1DBUF = SPI1TxBuf[SPI1TxIndex];
+#if defined SDCC || defined (__SDCC)
+  while(ACTIVE);
+#else
   while(U1ACTIVE);
-  }
+#endif
+}
 }
 
-void SPI1_Receive(unsigned char* SPI1RxBuf, unsigned char SPI1RxBufLength) { 
+void SPI1_Receive(unsigned char* SPI1RxBuf, unsigned char SPI1RxBufLength) {
 unsigned int SPI1RxIndex; 
 for (SPI1RxIndex = 0; SPI1RxIndex < SPI1RxBufLength; SPI1RxIndex++)
   {
-  asm("NOP");	// Minor delay of 1 system clock (32MHz)
-  U1DBUF =DUMMY; 
+  NOP();//asm("NOP")	// Minor delay of 1 system clock (32MHz)
+  U1DBUF =DUMMY;
   while ( U1CSR & 0x01 ); // Wait for U1ACTIVE to be de-asserted (end of byte transfer)
   SPI1RxBuf[SPI1RxIndex] = U1DBUF; 
   } 
-} 
+}
 
 void SPI1_Init(void)
 {

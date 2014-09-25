@@ -122,7 +122,6 @@ void halMcuWaitMs(uint16 msec)
 void halMcuReset(void)
 {
     const uint8 WDT_INTERVAL_MSEC_2=                    0x03;   // after ~2 ms
-
     WDCTL = ((WDCTL & 0xFC) | (WDT_INTERVAL_MSEC_2 & 0x03));
     // Start watchdog
     WDCTL &= ~0x04;     // Select watchdog mode

@@ -52,7 +52,7 @@
  * Interrupt Vectors
  * (Table 2.5, page 40)
  *---------------------------------------------------------------------------*/
-#define RFERR_VECTOR     0  /* RF TXFIFO underflow and RXFIFO overflow. */
+#define RFERR_VECTOR     0  /* RF TX FIFO underflow and RXFIFO overflow. */
 #define ADC_VECTOR       1  /* ADC end of conversion */
 #define URX0_VECTOR      2  /* USART 0 RX complete */
 #define URX1_VECTOR      3  /* USART 1 RX complete */
